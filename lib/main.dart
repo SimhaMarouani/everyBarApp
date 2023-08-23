@@ -10,7 +10,7 @@ final theme = ThemeData(
     brightness: Brightness.dark,
     primary: const Color.fromARGB(255, 53, 47, 68),
     onPrimary: const Color.fromARGB(255, 185, 180, 199),
-    secondary: const Color.fromARGB(255, 250, 240, 230),
+    secondary: const Color.fromARGB(255, 250, 240, 220),
     onSecondary: const Color.fromARGB(255, 92, 84, 112),
     background: const Color.fromARGB(255, 53, 47, 68),
   ),

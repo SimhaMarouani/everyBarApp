@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_info_app/models/business_model.dart';
 import 'package:school_info_app/data/data.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:school_info_app/widgets/business_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -69,51 +68,100 @@ class _MyWidgetState extends State<HomePage>
       ),
     );
     return Padding(
-      padding: const EdgeInsets.only(left: 10, top: 10),
-      child: Column(children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: TextFormField(
-                focusNode: _focusNode,
-                onTapOutside: (event) => _focusNode.unfocus(),
-                decoration: const InputDecoration(
-                    labelText: 'Tap to search..',
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                    labelStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey,
+      padding: EdgeInsets.only(
+          left: deviceWidth * 0.03,
+          top: deviceHeight * 0.03,
+          right: deviceWidth * 0.03),
+      child: SingleChildScrollView(
+        child: Column(children: [
+          Container(
+            padding: const EdgeInsets.all(4.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+              color: Theme.of(context)
+                  .colorScheme
+                  .secondary, // Remove the background color
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
-                    alignLabelWithHint: true,
-                    suffixIcon: Icon(Icons.wine_bar)),
-              ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(10),
-                  backgroundColor: Theme.of(context).colorScheme.background),
-              onPressed: () {},
-              child: const Icon(Icons.search),
-            ),
-          ],
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Text(
-            textAlign: TextAlign.start,
-            "Sales:",
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onBackground,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+                    focusNode: _focusNode,
+                    onTapOutside: (event) => _focusNode.unfocus(),
+                    decoration: InputDecoration(
+                        labelText: 'Tap to search..',
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 0),
+                        labelStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                        border: InputBorder.none,
+                        alignLabelWithHint: true,
+                        icon: Image.asset(
+                          'assests/beer.png',
+                          width: deviceWidth * 0.1,
+                          height: deviceHeight * 0.1,
+                        )),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(10),
+                      backgroundColor: Theme.of(context).colorScheme.secondary),
+                  onPressed: () {},
+                  child: const Icon(Icons.search),
+                ),
+              ],
             ),
           ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Image.asset(
+              "assests/sale-2.png",
+              width: deviceWidth * 0.1,
+              height: deviceHeight * 0.1,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              textAlign: TextAlign.start,
+              "Sales:",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ]),
+          listPubs,
+          SizedBox(height: deviceHeight * 0.1),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Image.asset(
+              "assests/light.png",
+              width: deviceWidth * 0.1,
+              height: deviceHeight * 0.1,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              textAlign: TextAlign.start,
+              "In your area:",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ]),
+          listPubs,
         ]),
-        listPubs,
-      ]),
+      ),
     );
   }
 }

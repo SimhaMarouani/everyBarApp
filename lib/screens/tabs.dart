@@ -33,9 +33,19 @@ class _TabsState extends ConsumerState<Tabs> {
       availableBusinesses: businesses,
     );
     return Scaffold(
-      appBar: AppBar(title: Text(activePageTitle)),
+      drawer: activePage,
+      appBar: AppBar(actions: [
+        IconButton(
+            onPressed: () {},
+            icon: Image.asset(
+              "assests/profile.png",
+              width: MediaQuery.of(context).size.width * 0.1,
+              height: MediaQuery.of(context).size.height * 0.1,
+            ))
+      ], title: Text(activePageTitle)),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).colorScheme.onSecondary,
         onTap: selectPage,
         currentIndex: _selectedPageIndex,
         items: const [
