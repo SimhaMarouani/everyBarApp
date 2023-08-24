@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:school_info_app/models/business_model.dart';
-import 'package:school_info_app/data/data.dart';
-import 'package:school_info_app/widgets/business_list.dart';
+import 'package:iBar/models/business_model.dart';
+import 'package:iBar/data/data.dart';
+import 'package:iBar/widgets/business_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.availableBusinesses});

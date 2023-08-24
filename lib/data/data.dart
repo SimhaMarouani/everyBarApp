@@ -1,4 +1,4 @@
-import 'package:school_info_app/models/business_model.dart';
+import 'package:iBar/models/business_model.dart';
 
 const businessList = [
   Business(

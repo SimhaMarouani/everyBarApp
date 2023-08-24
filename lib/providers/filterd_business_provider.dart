@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:school_info_app/providers/business_provider.dart';
+import 'package:iBar/providers/business_provider.dart';
 
 enum Filter { happyHour }
 

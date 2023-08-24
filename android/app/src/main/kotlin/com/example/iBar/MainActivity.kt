@@ -1,4 +1,4 @@
-package com.example.school_info_app
+package com.example.iBar
 
 import io.flutter.embedding.android.FlutterActivity
 

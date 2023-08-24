@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:school_info_app/providers/filterd_business_provider.dart';
-import 'package:school_info_app/screens/home_page.dart';
+import 'package:iBar/providers/filterd_business_provider.dart';
+import 'package:iBar/screens/home_page.dart';
 
 class Tabs extends ConsumerStatefulWidget {
   const Tabs({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:school_info_app/models/business_model.dart';
+import 'package:iBar/models/business_model.dart';
 
 class BusinesListItem extends StatelessWidget {
   const BusinesListItem({
