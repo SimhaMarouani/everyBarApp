@@ -33,7 +33,6 @@ class _TabsState extends ConsumerState<Tabs> {
       availableBusinesses: businesses,
     );
     return Scaffold(
-      drawer: activePage,
       appBar: AppBar(actions: [
         IconButton(
             onPressed: () {},
