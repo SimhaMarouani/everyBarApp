@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iBar/data/data.dart';
 import 'package:iBar/models/business_model.dart';
+import 'package:iBar/screens/search_res.dart';
 import 'package:iBar/widgets/search_bar.dart';
 import 'package:iBar/widgets/business_list_generator.dart';
 import 'package:iBar/widgets/search_pads.dart';
@@ -34,6 +36,19 @@ class _MyWidgetState extends State<HomePage>
     );
 
     _animationController.forward();
+  }
+
+  void onSearchPerform(
+      String keywords, MySearchBar searchBar, BuildContext context) async {
+    await await Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => SearchResults(
+          searchBar: searchBar,
+          businessList: businessList,
+        ),
+      ),
+    );
   }
 
   @override
@@ -82,7 +97,10 @@ class _MyWidgetState extends State<HomePage>
             SliverAppBar(
               forceElevated: true,
               pinned: true,
-              title: MySearchBar(focusNode: _focusNode),
+              title: MySearchBar(
+                focusNode: _focusNode,
+                onSearch: onSearchPerform,
+              ),
               expandedHeight: deviceHeight * 0.2, // Set as needed
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
@@ -94,7 +112,7 @@ class _MyWidgetState extends State<HomePage>
               ),
             ),
             SliverAnimatedList(
-              initialItemCount: 4,
+              initialItemCount: 2,
               itemBuilder: (context, index, animation) {
                 return Column(
                   children: [

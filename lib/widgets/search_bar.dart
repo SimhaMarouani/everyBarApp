@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
 
-class MySearchBar extends StatelessWidget {
-  const MySearchBar({super.key, required this.focusNode});
+class MySearchBar extends StatefulWidget {
+  const MySearchBar({
+    super.key,
+    required this.focusNode,
+    required this.onSearch,
+  });
   final FocusNode focusNode;
+  final Function(String, MySearchBar, BuildContext) onSearch;
+
+  @override
+  State<MySearchBar> createState() => _MySearchBarState();
+}
+
+class _MySearchBarState extends State<MySearchBar> {
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +48,11 @@ class MySearchBar extends StatelessWidget {
                 fontSize: 16,
                 color: Colors.black87,
               ),
-              focusNode: focusNode,
+              focusNode: widget.focusNode,
               onTap: () {
-                focusNode.requestFocus();
+                widget.focusNode.requestFocus();
               },
-              onTapOutside: (event) => focusNode.unfocus(),
+              onTapOutside: (event) => widget.focusNode.unfocus(),
               decoration: InputDecoration(
                 labelText: 'Tap to search..',
                 contentPadding:
@@ -60,7 +78,8 @@ class MySearchBar extends StatelessWidget {
               backgroundColor: Theme.of(context).colorScheme.secondary,
             ),
             onPressed: () {
-              // Perform search action here
+              String keywords = _searchController.text;
+              widget.onSearch(keywords, widget, context);
             },
             child: const Icon(Icons.search),
           ),
