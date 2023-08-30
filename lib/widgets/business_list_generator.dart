@@ -39,16 +39,20 @@ class _BusinessSalesListState extends State<BusinessList> {
       animation: widget.animationController,
       child: SizedBox(
         width: deviceWidth,
-        height: deviceHeight * 0.22,
+        height: deviceHeight * 0.3,
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 10),
           itemCount: businessList.length,
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) => BusinesListItem(
-            businessItem: businessList[index],
-            onSelect: () {
-              _selectBusiness(context, businessList[index]);
-            },
+          itemBuilder: (context, index) => Padding(
+            padding: EdgeInsets.only(
+                top: 8.0, left: deviceWidth * 0.05, right: 8.0, bottom: 8),
+            child: BusinesListItem(
+              businessItem: businessList[index],
+              onSelect: () {
+                _selectBusiness(context, businessList[index]);
+              },
+            ),
           ),
         ),
       ),

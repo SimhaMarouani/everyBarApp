@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iBar/models/business_model.dart';
 
 class BusinesListItem extends StatelessWidget {
@@ -15,17 +16,16 @@ class BusinesListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
-    return Container(
-      width: deviceWidth * 0.4,
-      height: deviceHeight * 0.2,
-      margin: const EdgeInsets.only(left: 10, top: 0),
+    return SizedBox(
+      width: deviceWidth * 0.5,
+      height: deviceHeight * 0.3,
       child: InkWell(
         onTap: onSelect,
         splashColor: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          width: deviceWidth * 0.4,
-          height: deviceHeight * 0.2,
+          width: deviceWidth * 0.5,
+          height: deviceHeight * 0.3,
           decoration: BoxDecoration(
             border: Border.all(
               color: Theme.of(context).colorScheme.secondary,
@@ -59,10 +59,9 @@ class BusinesListItem extends StatelessWidget {
                   top: constraints.minHeight * 0.01,
                   child: Text(
                     businessItem.name,
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
+                    style: GoogleFonts.getFont('Open Sans',
+                        fontSize: 30,
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
                 ),
               ],
