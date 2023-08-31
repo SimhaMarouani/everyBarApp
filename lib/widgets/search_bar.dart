@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 
 class MySearchBar extends StatefulWidget {
-  const MySearchBar({
-    super.key,
-    required this.focusNode,
-    required this.onSearch,
-  });
+  const MySearchBar(
+      {super.key,
+      required this.focusNode,
+      required this.onSearch,
+      required this.searchController});
   final FocusNode focusNode;
-  final Function(String, MySearchBar, BuildContext) onSearch;
+  final Function(String) onSearch;
+  final TextEditingController searchController;
 
   @override
   State<MySearchBar> createState() => _MySearchBarState();
 }
 
 class _MySearchBarState extends State<MySearchBar> {
-  final TextEditingController _searchController = TextEditingController();
-
   @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    widget.focusNode.requestFocus();
   }
 
   @override
@@ -44,6 +43,7 @@ class _MySearchBarState extends State<MySearchBar> {
         children: [
           Expanded(
             child: TextFormField(
+              keyboardType: TextInputType.text,
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black87,
@@ -78,8 +78,8 @@ class _MySearchBarState extends State<MySearchBar> {
               backgroundColor: Theme.of(context).colorScheme.secondary,
             ),
             onPressed: () {
-              String keywords = _searchController.text;
-              widget.onSearch(keywords, widget, context);
+              String keywords = widget.searchController.text;
+              widget.onSearch(keywords);
             },
             child: const Icon(Icons.search),
           ),

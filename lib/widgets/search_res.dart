@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:iBar/models/business_model.dart';
-import 'package:iBar/widgets/search_bar.dart';
 
 class SearchResults extends StatelessWidget {
   const SearchResults({
     super.key,
     required this.businessList,
-    required this.searchBar,
   });
   final List<Business> businessList;
-  final MySearchBar searchBar;
 
   @override
   Widget build(BuildContext context) {
-    var deviceHeight = MediaQuery.of(context).size.height;
     // var deviceWidth = MediaQuery.of(context).size.width;
 
     List<Widget> stepsWidgets = [];
@@ -41,24 +37,10 @@ class SearchResults extends StatelessWidget {
       );
       stepsWidgets.add(stepWidget);
     }
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          forceElevated: true,
-          pinned: true,
-          title: searchBar,
-          expandedHeight: deviceHeight * 0.2,
-        ),
-        SliverAnimatedList(
-          initialItemCount: 2,
-          itemBuilder: (context, index, animation) {
-            return Column(
-              children: [
-                for (final wid in stepsWidgets) wid,
-              ],
-            );
-          },
-        )
+
+    return Column(
+      children: [
+        for (final wid in stepsWidgets) wid,
       ],
     );
   }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:iBar/data/data.dart';
 import 'package:iBar/models/business_model.dart';
-import 'package:iBar/screens/search_res.dart';
-import 'package:iBar/widgets/search_bar.dart';
+import 'package:iBar/screens/search_screen.dart';
+import 'package:iBar/widgets/home_search_bar.dart';
 import 'package:iBar/widgets/business_list_generator.dart';
 import 'package:iBar/widgets/search_pads.dart';
 
@@ -23,7 +22,6 @@ class HomePage extends StatefulWidget {
 class _MyWidgetState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  final FocusNode _focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
@@ -38,14 +36,12 @@ class _MyWidgetState extends State<HomePage>
     _animationController.forward();
   }
 
-  void onSearchPerform(
-      String keywords, MySearchBar searchBar, BuildContext context) async {
-    await await Navigator.pushReplacement(
+  void onSearchPress(String str) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => SearchResults(
-          searchBar: searchBar,
-          businessList: businessList,
+        builder: (ctx) => SearchScreen(
+          passStr: str,
         ),
       ),
     );
@@ -54,7 +50,6 @@ class _MyWidgetState extends State<HomePage>
   @override
   void dispose() {
     _animationController.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -97,10 +92,7 @@ class _MyWidgetState extends State<HomePage>
             SliverAppBar(
               forceElevated: true,
               pinned: true,
-              title: MySearchBar(
-                focusNode: _focusNode,
-                onSearch: onSearchPerform,
-              ),
+              title: FakeSearchBar(onPress: onSearchPress),
               expandedHeight: deviceHeight * 0.2, // Set as needed
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
