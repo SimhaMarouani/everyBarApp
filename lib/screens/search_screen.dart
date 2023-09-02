@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iBar/models/business_model.dart';
+import 'package:iBar/widgets/business_list_generator.dart';
 import 'package:iBar/widgets/search_bar.dart';
-import 'package:iBar/widgets/search_res.dart';
 import 'package:iBar/data/data.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -17,13 +17,32 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNodeOfSearchBar = FocusNode();
   final FocusNode _focusNodeOfSilverAppBar = FocusNode();
-  List<Business> searchResults = [];
+  BusinessList searchResult = const BusinessList(isList: true, bList: []);
+
+  BusinessList searchByKeywords(String lowercaseSearchQuery) {
+    List<Business> newList = [];
+    for (var i in businessList) {
+      final String lowercaseText = i.name.toLowerCase();
+      if (lowercaseText.contains(lowercaseSearchQuery) ||
+          lowercaseSearchQuery.startsWith(lowercaseText)) {
+        newList.add(i);
+      }
+      for (var key in i.menu.keys) {
+        String newKey = key.toLowerCase();
+        if (newKey.contains(lowercaseSearchQuery)) newList.add(i);
+      }
+    }
+    return BusinessList(
+      bList: newList,
+      isList: false,
+    );
+  }
 
   void searchRes(String string) {
+    final String lowercaseSearchQuery = string.toLowerCase();
+
     setState(() {
-      searchResults = businessList.where((business) {
-        return business.name.contains(string);
-      }).toList();
+      searchResult = searchByKeywords(lowercaseSearchQuery);
     });
   }
 
@@ -36,25 +55,46 @@ class _SearchScreenState extends State<SearchScreen> {
         if (event is RawKeyDownEvent &&
             event.logicalKey == LogicalKeyboardKey.enter) {
           String keywords = _searchController.text;
-          searchRes(keywords);
+          if (keywords.isNotEmpty) searchRes(keywords);
         }
       },
-      child: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            title: MySearchBar(
-              focusNode: _focusNodeOfSearchBar,
-              onSearch: searchRes,
-              searchController: _searchController,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.1,
+              child: Image.asset(
+                "assests/background.jpg",
+                fit: BoxFit.fill,
+              ),
             ),
-            expandedHeight: deviceHeight * 0.2,
           ),
-          SliverAnimatedList(
-            initialItemCount: 2,
-            itemBuilder: (context, index, animation) {
-              return SearchResults(businessList: searchResults);
-            },
-          )
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                title: MySearchBar(
+                  focusNode: _focusNodeOfSearchBar,
+                  onSearch: searchRes,
+                  searchController: _searchController,
+                ),
+                expandedHeight: deviceHeight * 0.2,
+              ),
+              SliverAnimatedList(
+                initialItemCount: 1,
+                itemBuilder: (context, index, animation) {
+                  return Column(
+                    children: [
+                      if (searchResult.bList.isNotEmpty)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [searchResult],
+                        )
+                    ],
+                  );
+                },
+              )
+            ],
+          ),
         ],
       ),
     );

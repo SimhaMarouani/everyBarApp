@@ -7,10 +7,10 @@ import 'package:iBar/widgets/business_item.dart';
 class BusinessList extends StatefulWidget {
   const BusinessList(
       {super.key,
-      required this.animationController,
+      this.animationController,
       required this.isList,
       required this.bList});
-  final AnimationController animationController;
+  final AnimationController? animationController;
   final bool isList;
   final List<Business> bList;
 
@@ -32,40 +32,63 @@ class _BusinessSalesListState extends State<BusinessList> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
+    final deviceHeight = MediaQuery.of(context).size.height;
+    final animationController = widget.animationController;
+    final offset =
+        animationController != null ? const Offset(0.7, 0) : const Offset(0, 0);
+    final height =
+        animationController == null ? deviceHeight : deviceHeight * 0.3;
+    final widgetToDisplay = widget.isList
+        ? ListView.builder(
+            padding: const EdgeInsets.only(top: 10),
+            itemCount: widget.bList.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.only(
+                  top: 8.0, left: deviceWidth * 0.05, right: 8.0, bottom: 8),
+              child: BusinesListItem(
+                businessItem: widget.bList[index],
+                onSelect: () {
+                  _selectBusiness(context, widget.bList[index]);
+                },
+              ),
+            ),
+          )
+        : GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // You can change the number of columns here
+            ),
+            itemCount: widget.bList.length,
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: BusinesListItem(
+                businessItem: widget.bList[index],
+                onSelect: () {
+                  _selectBusiness(context, widget.bList[index]);
+                },
+              ),
+            ),
+          );
 
     return AnimatedBuilder(
-      animation: widget.animationController,
-      child: SizedBox(
-        width: deviceWidth,
-        height: deviceHeight * 0.3,
-        child: ListView.builder(
-          padding: const EdgeInsets.only(top: 10),
-          itemCount: businessList.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) => Padding(
-            padding: EdgeInsets.only(
-                top: 8.0, left: deviceWidth * 0.05, right: 8.0, bottom: 8),
-            child: BusinesListItem(
-              businessItem: businessList[index],
-              onSelect: () {
-                _selectBusiness(context, businessList[index]);
-              },
+        animation:
+            widget.animationController ?? const AlwaysStoppedAnimation(0.0),
+        child: SizedBox(
+            width: deviceWidth, height: height, child: widgetToDisplay),
+        builder: (ctx, child) {
+          return SlideTransition(
+            position: Tween(
+              begin: offset,
+              end: const Offset(0, 0),
+            ).animate(
+              CurvedAnimation(
+                  parent: widget.animationController ??
+                      const AlwaysStoppedAnimation(0.0),
+                  curve: Curves.easeInOut),
             ),
-          ),
-        ),
-      ),
-      builder: (ctx, child) => SlideTransition(
-        position: Tween(
-          begin: const Offset(0.7, 0),
-          end: const Offset(0, 0),
-        ).animate(
-          CurvedAnimation(
-              parent: widget.animationController, curve: Curves.easeInOut),
-        ),
-        child: child,
-      ),
-    );
+            child: child,
+          );
+        });
   }
 }

@@ -6,6 +6,7 @@ class Business {
     required this.closedTime,
     required this.location,
     required this.hasHappyHour,
+    required this.menu,
   });
   final String name;
   final String imageUrl;
@@ -13,4 +14,5 @@ class Business {
   final String closedTime;
   final String location;
   final bool hasHappyHour;
+  final Map menu;
 }

@@ -31,12 +31,9 @@ class FakeSearchBar extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 100, // Adjust the right position of the microphone button
           child: IconButton(
-            onPressed: () {
-              // Handle microphone button press
-            },
-            icon: const Icon(Icons.mic),
+            onPressed: () {},
+            icon: const Icon(Icons.mic, color: Colors.grey),
           ),
         ),
       ],

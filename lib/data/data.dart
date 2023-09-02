@@ -3,6 +3,7 @@ import 'package:iBar/models/business_model.dart';
 const businessList = [
   Business(
       name: "Baruh",
+      menu: {"Cocktail": 41.50, "Cola": 13},
       imageUrl: "imageUrl",
       openTime: "17:00",
       closedTime: "3:00",
@@ -10,6 +11,7 @@ const businessList = [
       hasHappyHour: false),
   Business(
       name: "Hezi Tuki",
+      menu: {"Beer": 19.90, "Cocktail": 41.50, "Cola": 13},
       imageUrl: "imageUrl",
       openTime: "18:00",
       closedTime: "2:30",
@@ -17,6 +19,7 @@ const businessList = [
       hasHappyHour: true),
   Business(
       name: "Shambaz",
+      menu: {"Beer": 19.90, "Cocktail": 41.50, "Cola": 13},
       imageUrl: "imageUrl",
       openTime: "17:00",
       closedTime: "3:00",
@@ -24,6 +27,7 @@ const businessList = [
       hasHappyHour: false),
   Business(
       name: "Yusuf",
+      menu: {"Cocktail": 41.50, "Cola": 13},
       imageUrl: "imageUrl",
       openTime: "17:00",
       closedTime: "3:00",
@@ -32,12 +36,14 @@ const businessList = [
   Business(
       name: "ofekBar",
       imageUrl: "imageUrl",
+      menu: {"Cocktail": 41.50},
       openTime: "17:00",
       closedTime: "3:00",
       location: "Modi'in",
       hasHappyHour: false),
   Business(
       name: "Dubim",
+      menu: {"Cocktail": 41.50, "Cola": 13},
       imageUrl: "imageUrl",
       openTime: "17:00",
       closedTime: "3:00",
@@ -45,6 +51,7 @@ const businessList = [
       hasHappyHour: false),
   Business(
       name: "Jaja",
+      menu: {"Beer": 19.90, "Cola": 13},
       imageUrl: "imageUrl",
       openTime: "17:00",
       closedTime: "3:00",

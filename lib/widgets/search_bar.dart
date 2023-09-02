@@ -27,22 +27,19 @@ class _MySearchBarState extends State<MySearchBar> {
     var deviceWidth = MediaQuery.of(context).size.width;
 
     return Container(
+      height: deviceHeight * 0.05,
+      padding: EdgeInsets.all(deviceWidth * 0.001),
       decoration: BoxDecoration(
-        borderRadius: BorderRadiusDirectional.circular(20),
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).colorScheme.secondary,
-            Theme.of(context).colorScheme.primaryContainer.withOpacity(0.8)
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        borderRadius: BorderRadius.circular(20.0),
+        color: Colors.grey[300],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
             child: TextFormField(
+              autocorrect: false,
+              controller: widget.searchController,
               keyboardType: TextInputType.text,
               style: const TextStyle(
                 fontSize: 16,
@@ -52,36 +49,35 @@ class _MySearchBarState extends State<MySearchBar> {
               onTap: () {
                 widget.focusNode.requestFocus();
               },
+              onFieldSubmitted: (value) {
+                var keywords = widget.searchController.text;
+                widget.onSearch(keywords);
+              },
               onTapOutside: (event) => widget.focusNode.unfocus(),
               decoration: InputDecoration(
-                labelText: 'Tap to search..',
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                labelStyle: const TextStyle(
-                  fontSize: 18,
+                hintText: 'Search',
+                hintStyle: const TextStyle(
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colors.blueGrey,
                 ),
+                contentPadding: EdgeInsets.only(
+                    left: deviceWidth * 0.001, bottom: deviceHeight * 0.01),
                 border: InputBorder.none,
-                alignLabelWithHint: true,
                 icon: Image.asset(
                   'assests/beer.png',
-                  width: deviceWidth * 0.1,
-                  height: deviceHeight * 0.1,
+                  width: deviceWidth * 0.09,
+                  height: deviceHeight * 0.09,
                 ),
               ),
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.all(10),
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-            ),
+          IconButton(
             onPressed: () {
-              String keywords = widget.searchController.text;
+              var keywords = widget.searchController.text;
               widget.onSearch(keywords);
             },
-            child: const Icon(Icons.search),
+            icon: const Icon(Icons.search, color: Colors.grey),
           ),
         ],
       ),

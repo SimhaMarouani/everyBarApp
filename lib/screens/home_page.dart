@@ -78,7 +78,7 @@ class _MyWidgetState extends State<HomePage>
                     padding: EdgeInsets.only(top: deviceHeight * 0.1),
                     child: Center(
                       child: Text(
-                        'iBar',
+                        'EveryBar',
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.secondary,
                             fontSize: deviceWidth * 0.1,
@@ -104,7 +104,7 @@ class _MyWidgetState extends State<HomePage>
               ),
             ),
             SliverAnimatedList(
-              initialItemCount: 2,
+              initialItemCount: 1,
               itemBuilder: (context, index, animation) {
                 return Column(
                   children: [
@@ -148,13 +148,10 @@ class _MyWidgetState extends State<HomePage>
                         ),
                       ),
                     ]),
-                    FadeTransition(
-                      opacity: animation,
-                      child: BusinessList(
-                        animationController: _animationController,
-                        isList: false,
-                        bList: widget.availableBusinesses,
-                      ),
+                    BusinessList(
+                      animationController: _animationController,
+                      isList: true,
+                      bList: widget.availableBusinesses,
                     ),
                   ],
                 );
