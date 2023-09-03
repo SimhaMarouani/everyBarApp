@@ -7,18 +7,21 @@ class BusinesListItem extends StatelessWidget {
     super.key,
     required this.businessItem,
     required this.onSelect,
+    required this.isSearching,
   });
 
   final Business businessItem;
+  final bool isSearching;
   final void Function() onSelect;
 
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
+    final height = !isSearching ? deviceHeight * 0.1 : deviceHeight * 0.5;
     return SizedBox(
       width: deviceWidth * 0.5,
-      height: deviceHeight * 0.3,
+      height: height,
       child: ElevatedButton(
         onPressed: onSelect,
         style: ElevatedButton.styleFrom(

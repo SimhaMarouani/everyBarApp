@@ -131,6 +131,7 @@ class _MyWidgetState extends State<HomePage>
                       animationController: _animationController,
                       isList: true,
                       bList: widget.availableBusinesses,
+                      isSearching: true,
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                       Image.asset(
@@ -152,6 +153,7 @@ class _MyWidgetState extends State<HomePage>
                       animationController: _animationController,
                       isList: true,
                       bList: widget.availableBusinesses,
+                      isSearching: true,
                     ),
                   ],
                 );

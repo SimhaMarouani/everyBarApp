@@ -7,7 +7,7 @@ class MySearchBar extends StatefulWidget {
       required this.onSearch,
       required this.searchController});
   final FocusNode focusNode;
-  final Function(String) onSearch;
+  final Function(String, bool, bool) onSearch;
   final TextEditingController searchController;
 
   @override
@@ -51,7 +51,7 @@ class _MySearchBarState extends State<MySearchBar> {
               },
               onFieldSubmitted: (value) {
                 var keywords = widget.searchController.text;
-                widget.onSearch(keywords);
+                widget.onSearch(keywords, true, false);
               },
               onTapOutside: (event) => widget.focusNode.unfocus(),
               decoration: InputDecoration(
@@ -75,7 +75,7 @@ class _MySearchBarState extends State<MySearchBar> {
           IconButton(
             onPressed: () {
               var keywords = widget.searchController.text;
-              widget.onSearch(keywords);
+              widget.onSearch(keywords, true, false);
             },
             icon: const Icon(Icons.search, color: Colors.grey),
           ),

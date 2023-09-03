@@ -4,13 +4,16 @@ import 'package:iBar/screens/business_home_page.dart';
 import 'package:iBar/widgets/business_item.dart';
 
 class BusinessList extends StatefulWidget {
-  const BusinessList(
-      {super.key,
-      this.animationController,
-      required this.isList,
-      required this.bList});
+  const BusinessList({
+    super.key,
+    this.animationController,
+    required this.isList,
+    required this.bList,
+    required this.isSearching,
+  });
   final AnimationController? animationController;
   final bool isList;
+  final bool isSearching;
   final List<Business> bList;
 
   @override
@@ -47,6 +50,7 @@ class _BusinessSalesListState extends State<BusinessList> {
               padding: EdgeInsets.only(
                   top: 8.0, left: deviceWidth * 0.05, right: 8.0, bottom: 8),
               child: BusinesListItem(
+                isSearching: widget.isSearching,
                 businessItem: widget.bList[index],
                 onSelect: () {
                   _selectBusiness(context, widget.bList[index]);
@@ -64,6 +68,7 @@ class _BusinessSalesListState extends State<BusinessList> {
                     EdgeInsets.only(top: index != 0 ? deviceHeight * 0.15 : 0),
                 child: BusinesListItem(
                   businessItem: widget.bList[index],
+                  isSearching: widget.isSearching,
                   onSelect: () {
                     _selectBusiness(context, widget.bList[index]);
                   },

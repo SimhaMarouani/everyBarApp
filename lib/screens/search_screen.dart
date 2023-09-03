@@ -14,12 +14,14 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  bool isEnter = false;
-  List<Widget> stepsWidgets = [];
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNodeOfSearchBar = FocusNode();
   final FocusNode _focusNodeOfSilverAppBar = FocusNode();
-  BusinessList searchResult = const BusinessList(isList: true, bList: []);
+  var searchResult = const BusinessList(
+    isList: true,
+    bList: [],
+    isSearching: false,
+  );
 
   List<Business> searchByKeywords(String lowercaseSearchQuery) {
     List<Business> newList = [];
@@ -37,56 +39,39 @@ class _SearchScreenState extends State<SearchScreen> {
     return newList;
   }
 
-  void searchRes(String string) {
+  void searchRes(String string, bool isSearching, bool isEmpty) {
     final String lowercaseSearchQuery = string.toLowerCase();
-
-    setState(() {
-      if (isEnter) {
-        searchResult = BusinessList(
-            bList: searchByKeywords(lowercaseSearchQuery), isList: false);
-      } else {
-        for (int i = 0; i < stepsWidgets.length; i++) {
-          Widget stepWidget = Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 1,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.white)),
-                  child: Text(
-                    '${i + 1}.b',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 33),
-            ],
+    searchResult = !isEmpty
+        ? BusinessList(
+            bList: searchByKeywords(lowercaseSearchQuery),
+            isList: false,
+            isSearching: isSearching,
+          )
+        : const BusinessList(
+            isList: true,
+            bList: [],
+            isSearching: false,
           );
-          stepsWidgets.add(stepWidget);
-        }
-      }
-    });
+
+    setState(() {});
   }
 
   void handleKeyEvent(RawKeyEvent event) {
+    String keywords = _searchController.text;
+
     if (event is RawKeyDownEvent &&
+        event.logicalKey == LogicalKeyboardKey.backspace &&
+        keywords.length == 1) {
+      searchRes(keywords, false, true);
+    } else if (event is RawKeyDownEvent &&
         event.logicalKey == LogicalKeyboardKey.enter) {
-      isEnter = true;
-      String keywords = _searchController.text;
-      if (keywords.isNotEmpty) searchRes(keywords);
-    }
-    if (event is RawKeyDownEvent) {
+      searchRes(keywords, true, false);
+    } else if (event is RawKeyDownEvent) {
       final keyLabel = event.logicalKey.keyLabel;
       if (keyLabel.isNotEmpty &&
           keyLabel.codeUnitAt(0) >= 65 &&
           keyLabel.codeUnitAt(0) <= 90) {
-        String keywords = _searchController.text;
-        if (keywords.isNotEmpty) searchRes(keywords);
+        searchRes(keywords, false, false);
       }
     }
   }
@@ -121,9 +106,7 @@ class _SearchScreenState extends State<SearchScreen> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return !isEnter
-                        ? BusinessList(isList: false, bList: searchResult.bList)
-                        : Column();
+                    return searchResult;
                   },
                 ),
               ),
