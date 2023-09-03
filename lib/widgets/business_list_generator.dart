@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iBar/data/data.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/screens/business_home_page.dart';
 import 'package:iBar/widgets/business_item.dart';
@@ -55,20 +54,22 @@ class _BusinessSalesListState extends State<BusinessList> {
               ),
             ),
           )
-        : GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // You can change the number of columns here
-            ),
+        : ListView.builder(
+            padding: const EdgeInsets.only(top: 10),
             itemCount: widget.bList.length,
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: BusinesListItem(
-                businessItem: widget.bList[index],
-                onSelect: () {
-                  _selectBusiness(context, widget.bList[index]);
-                },
-              ),
-            ),
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding:
+                    EdgeInsets.only(top: index != 0 ? deviceHeight * 0.15 : 0),
+                child: BusinesListItem(
+                  businessItem: widget.bList[index],
+                  onSelect: () {
+                    _selectBusiness(context, widget.bList[index]);
+                  },
+                ),
+              );
+            },
           );
 
     return AnimatedBuilder(

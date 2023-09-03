@@ -14,12 +14,14 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  bool isEnter = false;
+  List<Widget> stepsWidgets = [];
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNodeOfSearchBar = FocusNode();
   final FocusNode _focusNodeOfSilverAppBar = FocusNode();
   BusinessList searchResult = const BusinessList(isList: true, bList: []);
 
-  BusinessList searchByKeywords(String lowercaseSearchQuery) {
+  List<Business> searchByKeywords(String lowercaseSearchQuery) {
     List<Business> newList = [];
     for (var i in businessList) {
       final String lowercaseText = i.name.toLowerCase();
@@ -32,18 +34,61 @@ class _SearchScreenState extends State<SearchScreen> {
         if (newKey.contains(lowercaseSearchQuery)) newList.add(i);
       }
     }
-    return BusinessList(
-      bList: newList,
-      isList: false,
-    );
+    return newList;
   }
 
   void searchRes(String string) {
     final String lowercaseSearchQuery = string.toLowerCase();
 
     setState(() {
-      searchResult = searchByKeywords(lowercaseSearchQuery);
+      if (isEnter) {
+        searchResult = BusinessList(
+            bList: searchByKeywords(lowercaseSearchQuery), isList: false);
+      } else {
+        for (int i = 0; i < stepsWidgets.length; i++) {
+          Widget stepWidget = Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                flex: 1,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.white)),
+                  child: Text(
+                    '${i + 1}.b',
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 33),
+            ],
+          );
+          stepsWidgets.add(stepWidget);
+        }
+      }
     });
+  }
+
+  void handleKeyEvent(RawKeyEvent event) {
+    if (event is RawKeyDownEvent &&
+        event.logicalKey == LogicalKeyboardKey.enter) {
+      isEnter = true;
+      String keywords = _searchController.text;
+      if (keywords.isNotEmpty) searchRes(keywords);
+    }
+    if (event is RawKeyDownEvent) {
+      final keyLabel = event.logicalKey.keyLabel;
+      if (keyLabel.isNotEmpty &&
+          keyLabel.codeUnitAt(0) >= 65 &&
+          keyLabel.codeUnitAt(0) <= 90) {
+        String keywords = _searchController.text;
+        if (keywords.isNotEmpty) searchRes(keywords);
+      }
+    }
   }
 
   @override
@@ -51,13 +96,7 @@ class _SearchScreenState extends State<SearchScreen> {
     final deviceHeight = MediaQuery.of(context).size.height;
     return RawKeyboardListener(
       focusNode: _focusNodeOfSilverAppBar,
-      onKey: (RawKeyEvent event) {
-        if (event is RawKeyDownEvent &&
-            event.logicalKey == LogicalKeyboardKey.enter) {
-          String keywords = _searchController.text;
-          if (keywords.isNotEmpty) searchRes(keywords);
-        }
-      },
+      onKey: handleKeyEvent,
       child: Stack(
         children: [
           Positioned.fill(
@@ -79,20 +118,15 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 expandedHeight: deviceHeight * 0.2,
               ),
-              SliverAnimatedList(
-                initialItemCount: 1,
-                itemBuilder: (context, index, animation) {
-                  return Column(
-                    children: [
-                      if (searchResult.bList.isNotEmpty)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [searchResult],
-                        )
-                    ],
-                  );
-                },
-              )
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return !isEnter
+                        ? BusinessList(isList: false, bList: searchResult.bList)
+                        : Column();
+                  },
+                ),
+              ),
             ],
           ),
         ],

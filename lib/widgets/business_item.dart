@@ -28,41 +28,28 @@ class BusinesListItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        child: LayoutBuilder(builder: (context, constraints) {
-          double textFontSize = 30.0; // Adjust the font size as needed
-          TextSpan textSpan = TextSpan(
-            text: businessItem.name,
-            style: TextStyle(
-              fontSize: textFontSize,
-              color: Theme.of(context).colorScheme.secondary,
+        child: Stack(
+          fit: StackFit.loose,
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: Image.asset(
+                "assests/home.png",
+              ),
             ),
-          );
-
-          TextPainter textPainter = TextPainter(
-            text: textSpan,
-            textDirection: TextDirection.ltr,
-          );
-          textPainter.layout();
-
-          double textWidth = textPainter.width;
-
-          return Stack(
-            fit: StackFit.loose,
-            children: [
-              Image.asset("assests/home.png"),
-              Positioned(
-                left: constraints.maxWidth * 0.5 - textWidth * 0.5,
-                top: constraints.minHeight * 0.01,
-                child: Text(
-                  businessItem.name,
-                  style: GoogleFonts.getFont('Open Sans',
-                      fontSize: 30,
-                      color: Theme.of(context).colorScheme.secondary),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Text(
+                businessItem.name,
+                style: GoogleFonts.getFont(
+                  'Open Sans',
+                  fontSize: 30,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
-            ],
-          );
-        }),
+            ),
+          ],
+        ),
       ),
     );
   }
