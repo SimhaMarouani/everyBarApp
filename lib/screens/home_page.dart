@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/models/business_model.dart';
+import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/search_screen.dart';
 import 'package:iBar/widgets/home_search_bar.dart';
 import 'package:iBar/widgets/business_list_generator.dart';
 import 'package:iBar/widgets/search_pads.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({
     super.key,
     required this.availableBusinesses,
@@ -16,10 +19,10 @@ class HomePage extends StatefulWidget {
   final void Function(String identifier) onSelectScreen;
 
   @override
-  State<HomePage> createState() => _MyWidgetState();
+  ConsumerState<HomePage> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<HomePage>
+class _MyWidgetState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   @override
@@ -53,8 +56,18 @@ class _MyWidgetState extends State<HomePage>
     super.dispose();
   }
 
+  void onLanguageSelected(String language) {
+    ref.read(currentLanguageProvider.notifier).setLanguage(language);
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<String> languageOptions = [
+      'English',
+      'Hebrew',
+    ];
+    final selectedLanguage = ref.watch(currentLanguageProvider);
+    final selectedMap = selectedLanguageMap[selectedLanguage];
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
     return Stack(
@@ -72,10 +85,10 @@ class _MyWidgetState extends State<HomePage>
           slivers: [
             SliverToBoxAdapter(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: deviceHeight * 0.1),
+                    padding: EdgeInsets.only(
+                        top: deviceHeight * 0.1, left: deviceWidth * 0.3),
                     child: Center(
                       child: Text(
                         'EveryBar',
@@ -85,6 +98,26 @@ class _MyWidgetState extends State<HomePage>
                             fontWeight: FontWeight.bold),
                       ),
                     ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: deviceWidth * 0.04),
+                    child: Text(
+                      selectedLanguage,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary),
+                    ),
+                  ),
+                  PopupMenuButton<String>(
+                    icon: const Icon(Icons.language), // Language icon
+                    onSelected: onLanguageSelected,
+                    itemBuilder: (BuildContext context) {
+                      return languageOptions.map((String language) {
+                        return PopupMenuItem<String>(
+                          value: language,
+                          child: Text(language),
+                        );
+                      }).toList();
+                    },
                   ),
                 ],
               ),
@@ -117,8 +150,8 @@ class _MyWidgetState extends State<HomePage>
                           height: deviceHeight * 0.1,
                         ),
                         Text(
+                          selectedMap?["sales"] ?? "   Sales:",
                           textAlign: TextAlign.start,
-                          "   Sales:",
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onBackground,
                             fontSize: 24,
@@ -141,7 +174,7 @@ class _MyWidgetState extends State<HomePage>
                       ),
                       Text(
                         textAlign: TextAlign.start,
-                        "   In your area:",
+                        selectedMap?["in area"] ?? "   In Your Area:",
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onBackground,
                           fontSize: 24,

@@ -25,12 +25,12 @@ class _SearchScreenState extends State<SearchScreen> {
     isSearching: false,
   );
 
-  Future<void> addWord(String word, List<String> suggestions) async {
+  Future<void> addWord(String word) async {
     const serverUrl =
         'http://127.0.0.1:5000'; // Replace with your server's IP address
-    final response = await http.post(
+    final response = await http.put(
       Uri.parse('$serverUrl/add_word'),
-      body: json.encode({'word': word, 'suggestions': suggestions}),
+      body: json.encode({'word': word}),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -73,15 +73,15 @@ class _SearchScreenState extends State<SearchScreen> {
         matchFound = true;
       }
 
-      // Check if any menu item contains any of the keywords
-      for (var key in business.menu.keys) {
-        String lowercaseKey = key.toLowerCase();
-        if (keywords.any((keyword) => lowercaseKey.contains(keyword))) {
-          newList.add(business);
-          matchFound = true;
-          break; // No need to check other menu items if a match is found
-        }
-      }
+      // // Check if any menu item contains any of the keywords
+      // for (var key in business.menu.keys) {
+      //   String lowercaseKey = key.toLowerCase();
+      //   if (keywords.any((keyword) => lowercaseKey.contains(keyword))) {
+      //     newList.add(business);
+      //     matchFound = true;
+      //     break; // No need to check other menu items if a match is found
+      //   }
+      // }
 
       // Check if the location contains any of the keywords
       final String lowercaseLocation = business.location.toLowerCase();
@@ -127,7 +127,7 @@ class _SearchScreenState extends State<SearchScreen> {
             isSearching: false,
           );
     if (isSearching) {
-      addWord(string, businessToStringList(searchResult.bList));
+      // addWord(string);
     }
     setState(() {});
   }

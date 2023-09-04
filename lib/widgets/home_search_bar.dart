@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iBar/data/Headlines.dart';
+import 'package:iBar/providers/language_provider.dart';
 
-class FakeSearchBar extends StatelessWidget {
+class FakeSearchBar extends ConsumerWidget {
   const FakeSearchBar({super.key, required this.onPress});
   final Function onPress;
 
   @override
-  Widget build(BuildContext context) {
-    // var deviceHeight = MediaQuery.of(context).size.height;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedLanguage = ref.watch(currentLanguageProvider);
+    final selectedMap = selectedLanguageMap[selectedLanguage];
     var deviceWidth = MediaQuery.of(context).size.width;
     return Stack(
       alignment: Alignment.centerRight, // Align the mic button to the right
@@ -26,7 +30,7 @@ class FakeSearchBar extends StatelessWidget {
             children: [
               const Icon(Icons.search),
               SizedBox(width: deviceWidth * 0.01),
-              const Text("Search"),
+              Text(selectedMap?["search"] ?? "Search"),
             ],
           ),
         ),

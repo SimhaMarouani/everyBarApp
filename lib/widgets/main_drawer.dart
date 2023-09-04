@@ -65,7 +65,7 @@ class MainDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(
-            Icons.restaurant,
+            Icons.home,
             size: 26,
             color: Theme.of(context).colorScheme.onBackground,
           ),
@@ -84,7 +84,22 @@ class MainDrawer extends StatelessWidget {
             size: 26,
             color: Theme.of(context).colorScheme.onBackground,
           ),
-          title: Text('Filters',
+          title: Text('Settings',
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 24,
+                  )),
+          onTap: () {
+            onSelectScreen('filters');
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.person,
+            size: 26,
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          title: Text('Sign In',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                     fontSize: 24,
