@@ -64,8 +64,10 @@ class _BusinessSalesListState extends State<BusinessList> {
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               return Padding(
-                padding:
-                    EdgeInsets.only(top: index != 0 ? deviceHeight * 0.15 : 0),
+                padding: EdgeInsets.only(
+                    top: index != 0
+                        ? (widget.isSearching ? deviceHeight * 0.15 : 10)
+                        : 0),
                 child: BusinesListItem(
                   businessItem: widget.bList[index],
                   isSearching: widget.isSearching,

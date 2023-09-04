@@ -18,7 +18,7 @@ class BusinesListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
-    final height = !isSearching ? deviceHeight * 0.1 : deviceHeight * 0.5;
+    final height = !isSearching ? deviceHeight * 0.05 : deviceHeight * 0.5;
     return SizedBox(
       width: deviceWidth * 0.5,
       height: height,

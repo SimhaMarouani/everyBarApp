@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iBar/data/search_data.dart';
 
 class MySearchBar extends StatefulWidget {
   const MySearchBar(
@@ -38,7 +39,6 @@ class _MySearchBarState extends State<MySearchBar> {
         children: [
           Expanded(
             child: TextFormField(
-              autocorrect: false,
               controller: widget.searchController,
               keyboardType: TextInputType.text,
               style: const TextStyle(
