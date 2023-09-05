@@ -12,6 +12,7 @@ class FakeSearchBar extends ConsumerWidget {
     final selectedLanguage = ref.watch(currentLanguageProvider);
     final selectedMap = selectedLanguageMap[selectedLanguage];
     var deviceWidth = MediaQuery.of(context).size.width;
+
     return Stack(
       alignment: Alignment.centerRight, // Align the mic button to the right
       children: [

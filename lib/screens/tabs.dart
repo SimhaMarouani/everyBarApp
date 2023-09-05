@@ -52,6 +52,7 @@ class _TabsState extends ConsumerState<Tabs> {
       backgroundColor = const Color.fromARGB(255, 230, 230, 230);
     }
     return Scaffold(
+      drawer: MainDrawer(onSelectScreen: _setScreen),
       backgroundColor: backgroundColor,
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
