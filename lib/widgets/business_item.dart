@@ -25,7 +25,7 @@ class BusinesListItem extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onSelect,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).primaryColor,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),

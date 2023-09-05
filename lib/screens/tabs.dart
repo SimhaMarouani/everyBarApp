@@ -65,7 +65,7 @@ class _TabsState extends ConsumerState<Tabs> {
           BottomNavigationBarItem(
               icon: Icon(Icons.star),
               activeIcon: Icon(Icons.star),
-              label: 'Favourites'),
+              label: 'Favorites'),
           BottomNavigationBarItem(
               icon: Icon(Icons.wine_bar),
               activeIcon: Icon(Icons.wine_bar),
