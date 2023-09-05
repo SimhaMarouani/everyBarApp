@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/favourite_provider.dart';
+import 'package:iBar/widgets/business_home_page_buttons.dart';
 
 class BusinessHomePage extends ConsumerWidget {
   const BusinessHomePage({
@@ -14,6 +15,7 @@ class BusinessHomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final favoriteBusinesses = ref.watch(favoriteBusinessProvider);
     final isFav = favoriteBusinesses.contains(businessModel);
+    final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -56,11 +58,49 @@ class BusinessHomePage extends ConsumerWidget {
                 tag: businessModel.name,
                 child: Image.asset(
                   "assests/home.png",
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.2,
                   fit: BoxFit.fill,
                 ),
               ),
             ),
+            BusinessPageButtons(business: businessModel),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                businessModel.name,
+                style: TextStyle(
+                    color: Theme.of(context).secondaryHeaderColor,
+                    fontSize: deviceWidth * 0.1,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Align(
+                alignment: Alignment.centerRight,
+                child: Column(
+                  children: [
+                    Text(
+                      businessModel.location,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: deviceWidth * 0.05,
+                      ),
+                    ),
+                    Text(
+                        '${businessModel.openTime} - ${businessModel.closedTime}',
+                        style: TextStyle(
+                            color: Colors.black, fontSize: deviceWidth * 0.05)),
+                    Text(
+                        businessModel.hasHappyHour
+                            ? "Happy hour"
+                            : "No happy hour",
+                        style: TextStyle(
+                            color: Colors.black, fontSize: deviceWidth * 0.05)),
+                    Text(businessModel.isKosher ? "כשר" : "לא כשר",
+                        style: TextStyle(
+                            color: Colors.black, fontSize: deviceWidth * 0.05))
+                  ],
+                )),
           ],
         ),
       ),

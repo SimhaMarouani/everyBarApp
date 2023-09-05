@@ -12,8 +12,9 @@ const businessList = [
       imageUrl: "imageUrl",
       openTime: "17:00",
       closedTime: "3:00",
-      location: "Nahalat Shivaa 11",
-      hasHappyHour: false),
+      location: "נחלת שבעה 11",
+      hasHappyHour: false,
+      phone: "0544544163"),
   Business(
       age: 21,
       hasFood: false,
@@ -25,7 +26,7 @@ const businessList = [
       imageUrl: "imageUrl",
       openTime: "18:00",
       closedTime: "2:30",
-      location: "Hurkanos St. 19",
+      location: "הורקנוס 19",
       hasHappyHour: true),
   Business(
       age: 21,
@@ -38,7 +39,7 @@ const businessList = [
       imageUrl: "imageUrl",
       openTime: "17:00",
       closedTime: "3:00",
-      location: "Modi'in",
+      location: "מודיעין",
       hasHappyHour: false),
   Business(
       age: 18,

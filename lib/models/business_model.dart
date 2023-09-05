@@ -6,12 +6,13 @@ class Business {
     required this.closedTime,
     required this.location,
     required this.hasHappyHour,
-    required this.menu,
+    this.menu,
     required this.age,
     required this.hasFood,
     required this.isKosher,
     required this.loud,
     required this.smoke,
+    this.phone,
   });
   final String name;
   final String imageUrl;
@@ -24,5 +25,6 @@ class Business {
   final bool hasFood;
   final bool isKosher;
   final bool hasHappyHour;
-  final Map menu;
+  final Map? menu;
+  final String? phone;
 }
