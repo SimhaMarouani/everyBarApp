@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Business {
   const Business({
     required this.name,

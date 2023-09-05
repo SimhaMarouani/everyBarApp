@@ -30,6 +30,7 @@ class _TabsState extends ConsumerState<Tabs> {
 
   @override
   Widget build(BuildContext context) {
+    final deviceHeight = MediaQuery.of(context).size.height;
     final selectedLanguage = ref.watch(currentLanguageProvider);
     final selectedMap = selectedLanguageMap[selectedLanguage];
     Widget activePage = HomePage(
@@ -43,48 +44,41 @@ class _TabsState extends ConsumerState<Tabs> {
         onSelectScreen: _setScreen,
       );
     }
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    Color backgroundColor;
+    if (brightness == Brightness.dark) {
+      backgroundColor = const Color.fromARGB(255, 20, 20, 20);
+    } else {
+      backgroundColor = const Color.fromARGB(255, 230, 230, 230);
+    }
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: activePage,
-      drawer: MainDrawer(onSelectScreen: _setScreen),
-      bottomNavigationBar: BottomAppBar(
-        color: Theme.of(context).colorScheme.onSecondary,
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8.0, // Adjust the margin as needed.
-        elevation: 8.0, // Add elevation to the bottom app bar if desired.
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.home),
-              onPressed: () {
-                selectPage(0); // Implement your navigation logic here.
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.star_border),
-              onPressed: () {
-                selectPage(1); // Implement your navigation logic here.
-              },
-            ),
-            const SizedBox(
-                width: 48), // Add space in the middle for the rounded button.
-            IconButton(
-              icon: const Icon(Icons.person),
-              onPressed: () {
-                selectPage(2); // Implement your navigation logic here.
-              },
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+        selectedItemColor: Theme.of(context).primaryColor,
+        onTap: selectPage,
+        currentIndex: _selectedPageIndex,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.star),
+              activeIcon: Icon(Icons.star),
+              label: 'Favourites'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.wine_bar),
+              activeIcon: Icon(Icons.wine_bar),
+              label: 'Pubs'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              activeIcon: Icon(Icons.home),
+              label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              activeIcon: Icon(Icons.person),
+              label: 'Profile'),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue, // Set the background color of the button.
-        onPressed: () {
-          // Implement your action when the middle button is pressed.
-        },
-        child: const Icon(Icons.home), // You can change the icon.
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

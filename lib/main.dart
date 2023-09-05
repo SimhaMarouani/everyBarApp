@@ -14,15 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color.fromARGB(255, 53, 47, 68),
-        brightness: Brightness.dark,
-        primary: const Color.fromARGB(255, 53, 47, 68),
-        onPrimary: const Color.fromARGB(255, 185, 180, 199),
-        secondary: const Color.fromARGB(255, 250, 240, 220),
-        onSecondary: const Color.fromARGB(255, 92, 84, 112),
-        background: const Color.fromARGB(255, 53, 47, 68),
-      ),
+      primaryColor: const Color.fromARGB(255, 121, 21, 91),
       textTheme: GoogleFonts.latoTextTheme(),
     );
     return MaterialApp(

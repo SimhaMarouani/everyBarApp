@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iBar/data/search_data.dart';
 
 class MySearchBar extends StatefulWidget {
   const MySearchBar(
