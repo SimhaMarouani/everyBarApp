@@ -6,7 +6,6 @@ import 'package:iBar/screens/search_screen.dart';
 import 'package:iBar/widgets/home_search_bar.dart';
 import 'package:iBar/widgets/business_list_generator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iBar/widgets/silver_header.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -81,63 +80,44 @@ class _MyWidgetState extends ConsumerState<HomePage>
     return CustomScrollView(
       slivers: [
         SliverAppBar(
+          floating: true,
+          pinned: true,
           backgroundColor: Theme.of(context).hintColor,
-          flexibleSpace: Stack(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: deviceStatusBar, left: deviceWidth * 0.125),
-                    child: Text(
-                      'EveryBar',
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: deviceWidth * 0.10,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Tangerine'),
-                    ),
-                  ),
-                  PopupMenuButton<String>(
-                    padding: EdgeInsets.only(
-                        left: deviceWidth * 0.5, top: deviceHeight * 0.065),
-                    icon: const Icon(Icons.language), // Language icon
-                    onSelected: onLanguageSelected,
-                    itemBuilder: (BuildContext context) {
-                      return languageOptions.map((String language) {
-                        return PopupMenuItem<String>(
-                          value: language,
-                          child: Text(
-                            language,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                          ),
-                        );
-                      }).toList();
-                    },
-                  ),
-                ],
+              Text(
+                'EveryBar',
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: deviceWidth * 0.10,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Tangerine'),
+              ),
+              PopupMenuButton<String>(
+                icon: const Icon(Icons.language), // Language icon
+                onSelected: onLanguageSelected,
+                itemBuilder: (BuildContext context) {
+                  return languageOptions.map((String language) {
+                    return PopupMenuItem<String>(
+                      value: language,
+                      child: Text(
+                        language,
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ),
+                    );
+                  }).toList();
+                },
               ),
             ],
           ),
-        ),
-        SliverPersistentHeader(
-          floating: true,
-          delegate: CustomSliverPersistentHeaderDelegate(
-              child: Padding(
-                padding: EdgeInsets.only(top: deviceStatusBar),
-                child: FakeSearchBar(onPress: onSearchPress),
-              ),
-              maxHeight: 48 + deviceStatusBar,
-              minHeight: 48 + deviceStatusBar),
-          pinned: true,
+          expandedHeight: deviceHeight * 0.2,
         ),
         SliverAnimatedList(
           initialItemCount: 2,
           itemBuilder: (context, index, animation) {
             return Padding(
-              padding: EdgeInsets.only(top: deviceHeight * 0.1),
+              padding: EdgeInsets.only(top: deviceHeight * 0.01),
               child: Column(
                 children: [
                   Row(

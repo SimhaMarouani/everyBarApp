@@ -3,9 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/data/data.dart';
 import 'package:iBar/providers/favourite_provider.dart';
+import 'package:iBar/providers/filterd_business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/home_page.dart';
+import 'package:iBar/screens/search_screen.dart';
 import 'package:iBar/widgets/main_drawer.dart';
+import 'package:iBar/widgets/search_res.dart';
 
 class Tabs extends ConsumerStatefulWidget {
   const Tabs({super.key});
@@ -14,13 +17,18 @@ class Tabs extends ConsumerStatefulWidget {
   ConsumerState<Tabs> createState() => _TabsState();
 }
 
-class _TabsState extends ConsumerState<Tabs> {
-  int _selectedPageIndex = 0;
+class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
+  int _selectedPageIndex = 2;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
+  String str = "";
   void selectPage(int indexPage) {
     setState(() {
       _selectedPageIndex = indexPage;
     });
+    _animationController.reset();
+    _animationController.forward();
   }
 
   void _setScreen(String id) async {
@@ -28,22 +36,52 @@ class _TabsState extends ConsumerState<Tabs> {
     // todo: set screen
   }
 
+  List<Widget> _pages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 700), // Adjust animation duration
+    );
+
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _animationController.forward();
+
+    _pages = [
+      HomePage(
+        availableBusinesses: [],
+        onSelectScreen: _setScreen,
+      ),
+      HomePage(
+        availableBusinesses: [],
+        onSelectScreen: _setScreen,
+      ),
+      HomePage(
+        availableBusinesses: businessList,
+        onSelectScreen: _setScreen,
+      ),
+      SearchScreen(
+        passStr: str,
+      ),
+      HomePage(
+        availableBusinesses: [],
+        onSelectScreen: _setScreen,
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height;
     final selectedLanguage = ref.watch(currentLanguageProvider);
-    final selectedMap = selectedLanguageMap[selectedLanguage];
-    Widget activePage = HomePage(
-      availableBusinesses: businessList,
-      onSelectScreen: _setScreen,
-    );
-    if (_selectedPageIndex == 1) {
-      final favorit = ref.watch(favoriteBusinessProvider);
-      activePage = HomePage(
-        availableBusinesses: favorit,
-        onSelectScreen: _setScreen,
-      );
-    }
+
     Brightness brightness = MediaQuery.of(context).platformBrightness;
     Color backgroundColor;
     if (brightness == Brightness.dark) {
@@ -54,7 +92,19 @@ class _TabsState extends ConsumerState<Tabs> {
     return Scaffold(
       drawer: MainDrawer(onSelectScreen: _setScreen),
       backgroundColor: backgroundColor,
-      body: activePage,
+      body: AnimatedSwitcher(
+        duration: Duration(seconds: 1), // Adjust animation duration
+        child: FadeTransition(
+          opacity: _animation,
+          child: _pages[_selectedPageIndex],
+        ),
+        transitionBuilder: (child, animation) {
+          return ScaleTransition(
+            scale: animation,
+            child: child,
+          );
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
@@ -63,21 +113,30 @@ class _TabsState extends ConsumerState<Tabs> {
         currentIndex: _selectedPageIndex,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              activeIcon: Icon(Icons.star),
-              label: 'Favorites'),
+            icon: Icon(Icons.fastfood),
+            activeIcon: Icon(Icons.fastfood),
+            label: 'Drink & Food',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.wine_bar),
-              activeIcon: Icon(Icons.wine_bar),
-              label: 'Pubs'),
+            icon: Icon(Icons.wine_bar),
+            activeIcon: Icon(Icons.wine_bar),
+            label: 'Drink',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              activeIcon: Icon(Icons.home),
-              label: 'Home'),
+            icon: Icon(Icons.home),
+            activeIcon: Icon(Icons.home),
+            label: 'Home',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              activeIcon: Icon(Icons.person),
-              label: 'Profile'),
+            icon: Icon(Icons.search),
+            activeIcon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            activeIcon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
       ),
     );
