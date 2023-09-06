@@ -8,6 +8,7 @@ const selectedLanguageMap = {
     "favor": "Favourites",
     "profile": "Profile",
     "search": "Search",
+    "openHours": "Opening Hours:"
   },
   "Hebrew": {
     "home": "בית",
@@ -18,5 +19,6 @@ const selectedLanguageMap = {
     "favor": "מועדפים",
     "profile": "פרופיל",
     "search": "חפש",
+    "openHours": ":שעות פתיחה "
   }
 };
