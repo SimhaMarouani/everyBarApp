@@ -21,14 +21,11 @@ class BusinessHomePage extends ConsumerWidget {
   });
   final Business businessModel;
 
-  final String imageUrl =
-      'https://lh3.googleusercontent.com/p/AF1QipMPnQO90y2RWlbZOrAguHyD5Bz8LTnoIvMm31FV=w768-h768-n-o-k-v1';
-
   final String defaultImageUrl = 'assests/home.png';
 
   Future<Uint8List> _fetchImage() async {
     try {
-      final response = await http.get(Uri.parse(imageUrl));
+      final response = await http.get(Uri.parse(businessModel.imageUrl!));
       if (response.statusCode == 200) {
         return response.bodyBytes;
       }

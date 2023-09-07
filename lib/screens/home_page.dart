@@ -3,7 +3,7 @@ import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/search_screen.dart';
-import 'package:iBar/widgets/home_search_bar.dart';
+import 'package:iBar/widgets/appbar_list.dart';
 import 'package:iBar/widgets/business_list_generator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -95,7 +95,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
                     'EveryBar',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
-                        fontSize: deviceWidth * 0.10,
+                        fontSize: deviceWidth * 0.1,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Tangerine'),
                   ),
@@ -118,6 +118,27 @@ class _MyWidgetState extends ConsumerState<HomePage>
                 ],
               ),
               expandedHeight: deviceHeight * 0.3,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Padding(
+                  padding: EdgeInsets.only(top: deviceHeight * 0.10),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      SizedBox(
+                        width: deviceWidth,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ListWidget(),
+                            ListWidget(),
+                            ListWidget(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             SliverAnimatedList(
               initialItemCount: 2,
