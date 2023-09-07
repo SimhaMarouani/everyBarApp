@@ -7,6 +7,8 @@ import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/widgets/RaitingBar.dart';
 import 'package:iBar/widgets/business_home_page_buttons.dart';
 import 'package:iBar/widgets/business_page_text.dart';
+import 'package:http/http.dart' as http;
+import 'dart:typed_data';
 
 class BusinessHomePage extends ConsumerWidget {
   void _handleRatingChanged(int rating) {
@@ -18,6 +20,23 @@ class BusinessHomePage extends ConsumerWidget {
     required this.businessModel,
   });
   final Business businessModel;
+
+  final String imageUrl =
+      'https://lh3.googleusercontent.com/p/AF1QipMPnQO90y2RWlbZOrAguHyD5Bz8LTnoIvMm31FV=w768-h768-n-o-k-v1';
+
+  final String defaultImageUrl = 'assests/home.png';
+
+  Future<Uint8List> _fetchImage() async {
+    try {
+      final response = await http.get(Uri.parse(imageUrl));
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return Uint8List(0);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,13 +55,27 @@ class BusinessHomePage extends ConsumerWidget {
               height: deviceHeight * 0.4,
               child: Stack(
                 children: [
-                  Hero(
-                    tag: businessModel.name,
-                    child: Image.asset(
-                      "assests/baruh.png",
-                      width: double.infinity,
-                      height: deviceHeight * 0.3,
-                      fit: BoxFit.fitWidth,
+                  Center(
+                    child: FutureBuilder<Uint8List>(
+                      future: _fetchImage(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.data != null &&
+                            snapshot.data!.isNotEmpty) {
+                          return Image.memory(
+                            width: double.infinity,
+                            snapshot.data!,
+                            fit: BoxFit.cover,
+                          );
+                        } else {
+                          return Image.asset(
+                            defaultImageUrl,
+                            fit: BoxFit.cover,
+                          );
+                        }
+                      },
                     ),
                   ),
                   Padding(
