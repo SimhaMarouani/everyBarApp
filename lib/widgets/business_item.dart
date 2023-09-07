@@ -7,18 +7,16 @@ class BusinesListItem extends StatelessWidget {
     super.key,
     required this.businessItem,
     required this.onSelect,
-    required this.isSearching,
   });
 
   final Business businessItem;
-  final bool isSearching;
   final void Function() onSelect;
 
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
-    final height = !isSearching ? deviceHeight * 0.04 : deviceHeight * 0.5;
+    final height = deviceHeight * 0.35;
     return SizedBox(
       width: deviceWidth * 0.5,
       height: height,
@@ -44,7 +42,7 @@ class BusinesListItem extends StatelessWidget {
                 businessItem.name,
                 style: GoogleFonts.getFont(
                   'Open Sans',
-                  fontSize: !isSearching ? height * 0.6 : height * 0.1,
+                  fontSize: height * 0.1,
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),

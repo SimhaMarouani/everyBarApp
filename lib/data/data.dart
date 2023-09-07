@@ -9,7 +9,8 @@ const businessList = [
       smoke: true,
       name: "ברוך",
       menu: {"Cocktail": 41.50, "Cola": 13},
-      imageUrl: "assests/baruh.jpg",
+      imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYCRq_hfY3_gob3ZsHGzLpARUOC5ewubLL0Wdj4Y4K2tWHrIBp1T_dOpiAJuA-3B6oOvk&usqp=CAU",
       openTime: "20:00",
       closedTime: "2:00",
       location: "נחלת שבעה 11",
@@ -21,6 +22,8 @@ const businessList = [
       isKosher: false,
       loud: true,
       smoke: true,
+      imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYCRq_hfY3_gob3ZsHGzLpARUOC5ewubLL0Wdj4Y4K2tWHrIBp1T_dOpiAJuA-3B6oOvk&usqp=CAU",
       name: "חצי תוכי",
       menu: {"Beer": 19.90, "Cocktail": 41.50, "Cola": 13},
       openTime: "18:00",
@@ -33,6 +36,8 @@ const businessList = [
       isKosher: true,
       loud: true,
       smoke: true,
+      imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYCRq_hfY3_gob3ZsHGzLpARUOC5ewubLL0Wdj4Y4K2tWHrIBp1T_dOpiAJuA-3B6oOvk&usqp=CAU",
       name: "שמבז",
       menu: {"Beer": 19.90, "Cocktail": 41.50, "Cola": 13},
       openTime: "17:00",
@@ -47,7 +52,8 @@ const businessList = [
       smoke: true,
       name: "התקליט",
       menu: {"Cocktail": 41.50, "Cola": 13},
-      imageUrl: "assests/hataklit.jpg",
+      imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYCRq_hfY3_gob3ZsHGzLpARUOC5ewubLL0Wdj4Y4K2tWHrIBp1T_dOpiAJuA-3B6oOvk&usqp=CAU",
       openTime: "17:00",
       closedTime: "3:00",
       location: "Modi'in",
@@ -62,6 +68,8 @@ const businessList = [
       menu: {"Cocktail": 41.50},
       openTime: "17:00",
       closedTime: "3:00",
+      imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYCRq_hfY3_gob3ZsHGzLpARUOC5ewubLL0Wdj4Y4K2tWHrIBp1T_dOpiAJuA-3B6oOvk&usqp=CAU",
       location: "Modi'in",
       hasHappyHour: false),
   Business(
@@ -71,6 +79,8 @@ const businessList = [
       loud: true,
       smoke: true,
       name: "הדובים",
+      imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYCRq_hfY3_gob3ZsHGzLpARUOC5ewubLL0Wdj4Y4K2tWHrIBp1T_dOpiAJuA-3B6oOvk&usqp=CAU",
       menu: {"Cocktail": 41.50, "Cola": 13},
       openTime: "17:00",
       closedTime: "3:00",
@@ -82,6 +92,8 @@ const businessList = [
       isKosher: true,
       loud: false,
       smoke: true,
+      imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYCRq_hfY3_gob3ZsHGzLpARUOC5ewubLL0Wdj4Y4K2tWHrIBp1T_dOpiAJuA-3B6oOvk&usqp=CAU",
       name: "ימה",
       menu: {"Beer": 19.90, "Cola": 13},
       openTime: "17:00",

@@ -22,7 +22,6 @@ class _SearchScreenState extends State<SearchScreen> {
   var searchResult = const BusinessList(
     isList: true,
     bList: [],
-    isSearching: false,
   );
 
   Future<void> addWord(String word) async {
@@ -119,12 +118,10 @@ class _SearchScreenState extends State<SearchScreen> {
         ? BusinessList(
             bList: searchByKeywords(lowercaseSearchQuery),
             isList: false,
-            isSearching: isSearching,
           )
         : const BusinessList(
             isList: true,
             bList: [],
-            isSearching: false,
           );
     if (isSearching) {
       // addWord(string);

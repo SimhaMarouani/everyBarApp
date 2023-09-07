@@ -9,11 +9,9 @@ class BusinessList extends StatefulWidget {
     this.animationController,
     required this.isList,
     required this.bList,
-    required this.isSearching,
   });
   final AnimationController? animationController;
   final bool isList;
-  final bool isSearching;
   final List<Business> bList;
 
   @override
@@ -41,43 +39,21 @@ class _BusinessSalesListState extends State<BusinessList> {
         animationController != null ? const Offset(0.7, 0) : const Offset(0, 0);
     final height =
         animationController == null ? deviceHeight : deviceHeight * 0.3;
-    final widgetToDisplay = widget.isList
-        ? ListView.builder(
-            padding: const EdgeInsets.only(top: 10),
-            itemCount: widget.bList.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.only(
-                  top: 8.0, left: deviceWidth * 0.05, right: 8.0, bottom: 8),
-              child: BusinesListItem(
-                isSearching: widget.isSearching,
-                businessItem: widget.bList[index],
-                onSelect: () {
-                  _selectBusiness(context, widget.bList[index]);
-                },
-              ),
-            ),
-          )
-        : ListView.builder(
-            padding: const EdgeInsets.only(top: 10),
-            itemCount: widget.bList.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(
-                    top: index != 0
-                        ? (widget.isSearching ? deviceHeight * 0.15 : 10)
-                        : 0),
-                child: BusinesListItem(
-                  businessItem: widget.bList[index],
-                  isSearching: widget.isSearching,
-                  onSelect: () {
-                    _selectBusiness(context, widget.bList[index]);
-                  },
-                ),
-              );
-            },
-          );
+    final widgetToDisplay = ListView.builder(
+      padding: const EdgeInsets.only(top: 10),
+      itemCount: widget.bList.length,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) => Padding(
+        padding: EdgeInsets.only(
+            top: 8.0, left: deviceWidth * 0.05, right: 8.0, bottom: 8),
+        child: BusinesListItem(
+          businessItem: widget.bList[index],
+          onSelect: () {
+            _selectBusiness(context, widget.bList[index]);
+          },
+        ),
+      ),
+    );
 
     return AnimatedBuilder(
         animation:
