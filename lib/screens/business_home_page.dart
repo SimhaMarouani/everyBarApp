@@ -7,7 +7,6 @@ import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/widgets/RaitingBar.dart';
 import 'package:iBar/widgets/business_home_page_buttons.dart';
 import 'package:iBar/widgets/business_page_text.dart';
-import 'package:flutter/material.dart';
 
 class BusinessHomePage extends ConsumerWidget {
   void _handleRatingChanged(int rating) {
