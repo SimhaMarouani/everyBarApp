@@ -4,9 +4,16 @@ import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/favourite_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
+import 'package:iBar/widgets/RaitingBar.dart';
 import 'package:iBar/widgets/business_home_page_buttons.dart';
+import 'package:iBar/widgets/business_page_text.dart';
+import 'package:flutter/material.dart';
 
 class BusinessHomePage extends ConsumerWidget {
+  void _handleRatingChanged(int rating) {
+    print('User rated the page with $rating stars.');
+  }
+
   const BusinessHomePage({
     super.key,
     required this.businessModel,
@@ -20,54 +27,32 @@ class BusinessHomePage extends ConsumerWidget {
     final selectedLanguage = ref.watch(currentLanguageProvider);
     final selectedMap = selectedLanguageMap[selectedLanguage];
     final deviceWidth = MediaQuery.of(context).size.width;
+    final deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              final wasAdded = ref
-                  .read(favoriteBusinessProvider.notifier)
-                  .toggleMealFavoriteStatus(businessModel);
-              ScaffoldMessenger.of(context).clearSnackBars();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(wasAdded ? 'Marked As Favorites' : 'Removed')));
-            },
-            icon: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (child, animation) {
-                return RotationTransition(
-                  turns: Tween<double>(begin: 0.5, end: 1.0).animate(animation),
-                  child: child,
-                );
-              },
-              child: Icon(
-                isFav ? Icons.star : Icons.star_border,
-                key: ValueKey(isFav),
-              ),
-            ),
-          ),
-        ],
-        title: Text(
-          businessModel.name,
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.height * 0.045,
-              ),
-              child: Hero(
-                tag: businessModel.name,
-                child: Image.asset(
-                  "assests/home.png",
-                  height: MediaQuery.of(context).size.height * 0.2,
-                  fit: BoxFit.fill,
-                ),
+            Container(
+              color: Colors.white,
+              height: deviceHeight * 0.4,
+              child: Stack(
+                children: [
+                  Hero(
+                    tag: businessModel.name,
+                    child: Image.asset(
+                      "assests/baruh.png",
+                      width: double.infinity,
+                      height: deviceHeight * 0.3,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: deviceHeight * 0.32),
+                    child: BusinessPageButtons(business: businessModel),
+                  ),
+                ],
               ),
             ),
-            BusinessPageButtons(business: businessModel),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
@@ -78,29 +63,11 @@ class BusinessHomePage extends ConsumerWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  businessModel.location,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: deviceWidth * 0.05,
-                  ),
-                ),
-                Text(selectedMap?["openHours"] ?? "Open Hours:"),
-              ],
+            BusinessPageTexts(business: businessModel),
+            StarRating(
+              initialRating: 0, // Set according tto the avg
+              onRatingChanged: _handleRatingChanged,
             ),
-            Text('${businessModel.openTime} - ${businessModel.closedTime}',
-                style: TextStyle(
-                    color: Colors.black, fontSize: deviceWidth * 0.05)),
-            Text(businessModel.hasHappyHour ? "Happy hour" : "No happy hour",
-                style: TextStyle(
-                    color: Colors.black, fontSize: deviceWidth * 0.05)),
-            Text(businessModel.isKosher ? "כשר" : "לא כשר",
-                style: TextStyle(
-                    color: Colors.black, fontSize: deviceWidth * 0.05)),
           ],
         ),
       ),

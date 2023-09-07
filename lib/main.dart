@@ -13,13 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = ThemeData(
-      useMaterial3: true,
-      primaryColor: const Color.fromARGB(255, 121, 21, 91),
-      secondaryHeaderColor: const Color.fromARGB(255, 194, 51, 115),
-      highlightColor: const Color.fromARGB(255, 246, 99, 92),
-      hintColor: const Color.fromARGB(255, 255, 186, 134),
-      textTheme: GoogleFonts.latoTextTheme(),
-    );
+        useMaterial3: true,
+        primaryColor: const Color.fromARGB(255, 121, 21, 91),
+        secondaryHeaderColor: const Color.fromARGB(255, 194, 51, 115),
+        highlightColor: const Color.fromARGB(255, 246, 99, 92),
+        hintColor: const Color.fromARGB(255, 255, 186, 134),
+        primaryTextTheme: GoogleFonts.dancingScriptTextTheme(),
+        textTheme: GoogleFonts.latoTextTheme());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme,

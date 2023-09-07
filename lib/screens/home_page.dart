@@ -5,10 +5,7 @@ import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/search_screen.dart';
 import 'package:iBar/widgets/home_search_bar.dart';
 import 'package:iBar/widgets/business_list_generator.dart';
-import 'package:iBar/widgets/main_drawer.dart';
-import 'package:iBar/widgets/search_pads.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iBar/widgets/silver_header.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -80,20 +77,22 @@ class _MyWidgetState extends ConsumerState<HomePage>
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceStatusBar = MediaQuery.of(context).padding.top;
     final deviceWidth = MediaQuery.of(context).size.width;
-    print(deviceStatusBar);
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          backgroundColor: backgroundColor,
+          floating: true,
+          pinned: true,
+          backgroundColor: Theme.of(context).hintColor,
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'EveryBar',
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: deviceWidth * 0.09,
-                    fontWeight: FontWeight.bold),
+                    fontSize: deviceWidth * 0.10,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Tangerine'),
               ),
               PopupMenuButton<String>(
                 icon: const Icon(Icons.language), // Language icon
@@ -114,70 +113,62 @@ class _MyWidgetState extends ConsumerState<HomePage>
           ),
           expandedHeight: deviceHeight * 0.2,
         ),
-        SliverPersistentHeader(
-          floating: false,
-          delegate: CustomSliverPersistentHeaderDelegate(
-              child: Padding(
-                padding: EdgeInsets.only(top: deviceStatusBar),
-                child: FakeSearchBar(onPress: onSearchPress),
-              ),
-              maxHeight: 48 + deviceStatusBar,
-              minHeight: 48 + deviceStatusBar),
-          pinned: true,
-        ),
         SliverAnimatedList(
           initialItemCount: 2,
           itemBuilder: (context, index, animation) {
-            return Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
+            return Padding(
+              padding: EdgeInsets.only(top: deviceHeight * 0.01),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        "assests/sale-2.png",
+                        width: deviceWidth * 0.1,
+                        height: deviceHeight * 0.1,
+                      ),
+                      Text(
+                        selectedMap?["in area"] ?? "   In Your Area:",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  BusinessList(
+                    animationController: _animationController,
+                    isList: true,
+                    bList: widget.availableBusinesses,
+                    isSearching: true,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                     Image.asset(
-                      "assests/sale-2.png",
+                      "assests/light.png",
                       width: deviceWidth * 0.1,
                       height: deviceHeight * 0.1,
                     ),
                     Text(
-                      selectedMap?["sales"] ?? "   Sales:",
                       textAlign: TextAlign.start,
+                      selectedMap?["favor"] ?? "   Favorites:",
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
-                BusinessList(
-                  animationController: _animationController,
-                  isList: true,
-                  bList: widget.availableBusinesses,
-                  isSearching: true,
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Image.asset(
-                    "assests/light.png",
-                    width: deviceWidth * 0.1,
-                    height: deviceHeight * 0.1,
+                  ]),
+                  BusinessList(
+                    animationController: _animationController,
+                    isList: true,
+                    bList: widget.availableBusinesses,
+                    isSearching: true,
                   ),
-                  Text(
-                    textAlign: TextAlign.start,
-                    selectedMap?["in area"] ?? "   In Your Area:",
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ]),
-                BusinessList(
-                  animationController: _animationController,
-                  isList: true,
-                  bList: widget.availableBusinesses,
-                  isSearching: true,
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),

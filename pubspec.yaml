@@ -33,6 +33,8 @@ dependencies:
   flutter_svg: ^0.22.0
   http: ^0.13.3
   provider: ^5.0.0
+  rating_bar: ^1.2.0
+
 
 
 
@@ -75,6 +77,9 @@ flutter:
     - assests/sale-2.png
     - assests/star.png
     - assests/background.jpg
+    - assests/baruh.png
+    - assests/hataklit.png
+
 
   #   - images/a_dot_ham.jpeg
 
@@ -90,8 +95,11 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Kaushan
+    - family: DancingScript
       fonts: 
-        - asset: assests/fonts/KaushanScript-Regular.ttf
+        - asset: assests/fonts/DancingScript-VariableFont_wght.ttf
+    - family: Tangerine
+      fonts:
+        - asset: assests/fonts/Tangerine-Bold.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
