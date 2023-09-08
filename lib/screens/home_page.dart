@@ -4,8 +4,6 @@ import 'package:iBar/data/data.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/search_screen.dart';
-import 'package:iBar/widgets/appbar_list.dart';
-import 'package:iBar/widgets/bubble.dart';
 import 'package:iBar/widgets/bubble_list.dart';
 import 'package:iBar/widgets/business_list_generator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

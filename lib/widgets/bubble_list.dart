@@ -6,6 +6,13 @@ import 'package:iBar/models/business_model.dart';
 import 'package:iBar/screens/business_home_page.dart';
 import 'package:iBar/widgets/bubble.dart';
 
+class GenerateBubblesResult {
+  final List<Bubble> bubbles;
+  final double totalWidth;
+
+  GenerateBubblesResult(this.bubbles, this.totalWidth);
+}
+
 class BubbleList extends StatefulWidget {
   const BubbleList({
     super.key,
@@ -29,55 +36,66 @@ class _BubbleListState extends State<BubbleList> {
     );
   }
 
-  List<Bubble> generateBubbles(
-    double maxHeight,
-    double minHeight,
-    List<double> heights,
+  GenerateBubblesResult generateBubbles(
+    double width,
+    double height,
   ) {
-    var totalWidth = 0;
+    List<double> heights = [height * 0.03, height * 0.06, height * 0.1];
+    List<double> sizes = [width * 0.1, width * 0.15, width * 0.2];
     List<Bubble> businessesBubbles = [];
     Random random = Random();
 
-    for (int i = 0; i < businessList.length; i++) {
-      double randomHeight =
-          random.nextDouble() * (maxHeight - minHeight) + minHeight;
+    var totalWidth = 0.0;
+    var currentHeight = 0.0;
+    var maxSizeInColumn = 0.0;
+    var lastInt = -1;
 
-      int randTomIndex = random.nextInt(heights.length);
-      double randomTop = heights[randTomIndex];
+    for (int i = 0; i < businessList.length; i++) {
+      int randomSizeInd = random.nextInt(sizes.length);
+      while (randomSizeInd == lastInt) {
+        randomSizeInd = random.nextInt(sizes.length);
+      }
+      lastInt = randomSizeInd;
+
+      double randomSize = sizes[randomSizeInd];
+
+      if (currentHeight + randomSize > height * 0.2) {
+        totalWidth += maxSizeInColumn;
+        currentHeight = 0.0;
+        maxSizeInColumn = 0.0;
+      }
 
       businessesBubbles.add(Bubble(
         name: businessList[i].name,
-        left: totalWidth.toDouble(),
-        top: randomTop,
-        size: randomHeight,
+        left: totalWidth,
+        top: currentHeight + heights[randomSizeInd],
+        size: randomSize,
         onSelect: () {
           selectBusiness(context, businessList[i]);
         },
       ));
-      totalWidth += randomHeight.toInt();
+
+      currentHeight += randomSize * 2;
+      maxSizeInColumn =
+          maxSizeInColumn < randomSize ? randomSize : maxSizeInColumn;
     }
 
-    return businessesBubbles;
+    return GenerateBubblesResult(businessesBubbles, totalWidth);
   }
 
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
-    List<Bubble> businessesBubbles = generateBubbles(
-      deviceHeight * 0.15,
-      deviceHeight * 0.05,
-      [deviceHeight * 0.02, deviceHeight * 0.05, deviceHeight * 0.1],
-    );
-
+    final businessesBubbles = generateBubbles(deviceWidth, deviceHeight);
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
         height: deviceHeight * 0.3,
-        width: deviceWidth * 1.5, // Adjust the width as needed
+        width: businessesBubbles.totalWidth,
         child: Stack(
           children: <Widget>[
-            for (var bub in businessesBubbles) bub,
+            for (var bub in businessesBubbles.bubbles) bub,
           ],
         ),
       ),

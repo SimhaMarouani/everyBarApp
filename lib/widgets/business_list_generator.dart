@@ -6,11 +6,11 @@ import 'package:iBar/widgets/business_item.dart';
 class BusinessList extends StatefulWidget {
   const BusinessList({
     super.key,
-    this.animationController,
+    required this.animationController,
     required this.isList,
     required this.bList,
   });
-  final AnimationController? animationController;
+  final AnimationController animationController;
   final bool isList;
   final List<Business> bList;
 
@@ -35,10 +35,8 @@ class _BusinessSalesListState extends State<BusinessList> {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
     final animationController = widget.animationController;
-    final offset =
-        animationController != null ? const Offset(0.7, 0) : const Offset(0, 0);
-    final height =
-        animationController == null ? deviceHeight : deviceHeight * 0.3;
+    const offset = Offset(0.7, 0);
+    final height = deviceHeight * 0.25;
     final widgetToDisplay = ListView.builder(
       padding: const EdgeInsets.only(top: 10),
       itemCount: widget.bList.length,
@@ -59,7 +57,9 @@ class _BusinessSalesListState extends State<BusinessList> {
         animation:
             widget.animationController ?? const AlwaysStoppedAnimation(0.0),
         child: SizedBox(
-            width: deviceWidth, height: height, child: widgetToDisplay),
+          height: height,
+          child: widgetToDisplay,
+        ),
         builder: (ctx, child) {
           return SlideTransition(
             position: Tween(
@@ -67,9 +67,7 @@ class _BusinessSalesListState extends State<BusinessList> {
               end: const Offset(0, 0),
             ).animate(
               CurvedAnimation(
-                  parent: widget.animationController ??
-                      const AlwaysStoppedAnimation(0.0),
-                  curve: Curves.easeInOut),
+                  parent: widget.animationController, curve: Curves.easeInOut),
             ),
             child: child,
           );

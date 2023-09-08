@@ -16,10 +16,8 @@ class BusinesListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
-    final height = deviceHeight * 0.35;
     return SizedBox(
-      width: deviceWidth * 0.5,
-      height: height,
+      width: deviceWidth * 0.38,
       child: ElevatedButton(
         onPressed: onSelect,
         style: ElevatedButton.styleFrom(
@@ -42,7 +40,7 @@ class BusinesListItem extends StatelessWidget {
                 businessItem.name,
                 style: GoogleFonts.getFont(
                   'Open Sans',
-                  fontSize: height * 0.1,
+                  fontSize: deviceHeight * 0.3 * 0.1,
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),

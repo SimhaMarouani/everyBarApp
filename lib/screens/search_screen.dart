@@ -19,10 +19,6 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNodeOfSearchBar = FocusNode();
   final FocusNode _focusNodeOfSilverAppBar = FocusNode();
-  var searchResult = const BusinessList(
-    isList: true,
-    bList: [],
-  );
 
   Future<void> addWord(String word) async {
     const serverUrl =
@@ -72,16 +68,6 @@ class _SearchScreenState extends State<SearchScreen> {
         matchFound = true;
       }
 
-      // // Check if any menu item contains any of the keywords
-      // for (var key in business.menu.keys) {
-      //   String lowercaseKey = key.toLowerCase();
-      //   if (keywords.any((keyword) => lowercaseKey.contains(keyword))) {
-      //     newList.add(business);
-      //     matchFound = true;
-      //     break; // No need to check other menu items if a match is found
-      //   }
-      // }
-
       // Check if the location contains any of the keywords
       final String lowercaseLocation = business.location.toLowerCase();
       if (keywords.every((keyword) => lowercaseLocation.contains(keyword))) {
@@ -114,18 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void searchRes(String string, bool isSearching, bool isEmpty) {
     final String lowercaseSearchQuery = string.toLowerCase();
-    searchResult = !isEmpty
-        ? BusinessList(
-            bList: searchByKeywords(lowercaseSearchQuery),
-            isList: false,
-          )
-        : const BusinessList(
-            isList: true,
-            bList: [],
-          );
-    if (isSearching) {
-      // addWord(string);
-    }
+
     setState(() {});
   }
 
@@ -182,7 +157,7 @@ class _SearchScreenState extends State<SearchScreen> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return searchResult;
+                    return;
                   },
                 ),
               ),

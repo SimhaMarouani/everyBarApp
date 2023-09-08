@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:iBar/models/business_model.dart';
 
 class ListWidget extends StatelessWidget {
   @override
