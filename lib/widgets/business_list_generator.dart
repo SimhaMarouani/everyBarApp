@@ -56,8 +56,9 @@ class _BusinessSalesListState extends State<BusinessList> {
                 child: Column(
                   children: [
                     Flexible(
-                      flex: 5,
+                      flex: 2,
                       child: SizedBox(
+                        height: deviceHeight * 0.25 * 0.55,
                         width: deviceWidth * 0.35,
                         child: BusinesListItem(
                           businessItem: widget.bList[index],
@@ -68,7 +69,7 @@ class _BusinessSalesListState extends State<BusinessList> {
                       ),
                     ),
                     Flexible(
-                      flex: 4,
+                      flex: 1,
                       child: Container(
                         height: deviceHeight * 0.25 * 0.45,
                         width: deviceWidth * 0.35,

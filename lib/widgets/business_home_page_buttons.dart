@@ -39,7 +39,7 @@ class BusinessPageButtons extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     List<Container> buttonsList = createButtons(context);
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children:
           buttonsList.isNotEmpty ? [for (var wid in buttonsList) wid] : [],
     );

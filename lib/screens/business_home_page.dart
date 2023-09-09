@@ -11,10 +11,6 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
 class BusinessHomePage extends ConsumerWidget {
-  void _handleRatingChanged(int rating) {
-    print('User rated the page with $rating stars.');
-  }
-
   const BusinessHomePage({
     super.key,
     required this.businessModel,
@@ -22,6 +18,8 @@ class BusinessHomePage extends ConsumerWidget {
   final Business businessModel;
 
   final String defaultImageUrl = 'assests/home.png';
+
+  void _handleRatingChanged(int rating) {}
 
   Future<Uint8List> _fetchImage() async {
     try {
@@ -43,12 +41,12 @@ class BusinessHomePage extends ConsumerWidget {
     final selectedMap = selectedLanguageMap[selectedLanguage];
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              color: Colors.white,
               height: deviceHeight * 0.4,
               child: Stack(
                 children: [
@@ -58,12 +56,13 @@ class BusinessHomePage extends ConsumerWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         } else if (snapshot.data != null &&
                             snapshot.data!.isNotEmpty) {
                           return Image.memory(
                             width: double.infinity,
                             snapshot.data!,
+                            height: deviceHeight,
                             fit: BoxFit.cover,
                           );
                         } else {
@@ -75,10 +74,66 @@ class BusinessHomePage extends ConsumerWidget {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: deviceHeight * 0.32),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
                     child: BusinessPageButtons(business: businessModel),
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: deviceWidth * 0.05, top: deviceHeight * 0.05),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.0),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: deviceWidth * 0.85, top: deviceHeight * 0.05),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.0),
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          final wasAdded = ref
+                              .read(favoriteBusinessProvider.notifier)
+                              .toggleMealFavoriteStatus(businessModel);
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(wasAdded
+                                  ? 'Marked As Favorites'
+                                  : 'Removed')));
+                        },
+                        icon: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder: (child, animation) {
+                            return RotationTransition(
+                              turns: Tween<double>(begin: 0.5, end: 1.0)
+                                  .animate(animation),
+                              child: child,
+                            );
+                          },
+                          child: Icon(
+                            isFav ? Icons.star : Icons.star_border,
+                            key: ValueKey(isFav),
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -94,7 +149,7 @@ class BusinessHomePage extends ConsumerWidget {
             ),
             BusinessPageTexts(business: businessModel),
             StarRating(
-              initialRating: 0, // Set according tto the avg
+              initialRating: businessModel.ratingAvg,
               onRatingChanged: _handleRatingChanged,
             ),
           ],

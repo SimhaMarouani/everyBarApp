@@ -38,10 +38,7 @@ class BusinesListItem extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.data != null && snapshot.data!.isNotEmpty) {
-            return Image.memory(
-              snapshot.data!,
-              fit: BoxFit.cover,
-            );
+            return Image.memory(snapshot.data!, fit: BoxFit.cover);
           } else {
             return Image.asset(
               defaultImageUrl,

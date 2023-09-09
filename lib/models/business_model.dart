@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Business {
   const Business({
     required this.name,
@@ -13,6 +15,7 @@ class Business {
     required this.loud,
     required this.smoke,
     this.phone,
+    required this.ratingAvg,
   });
   final String name;
   final String? imageUrl;
@@ -27,4 +30,5 @@ class Business {
   final bool hasHappyHour;
   final Map? menu;
   final String? phone;
+  final int ratingAvg;
 }
