@@ -71,11 +71,6 @@ class _MyWidgetState extends ConsumerState<HomePage>
       'English',
       'Hebrew',
     ];
-    final selectedLanguage = ref.watch(currentLanguageProvider);
-    final selectedMap = selectedLanguageMap[selectedLanguage];
-    var Align = selectedLanguage == 'English'
-        ? Alignment.centerRight
-        : Alignment.centerLeft;
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
     return Consumer(
@@ -118,7 +113,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
                   ),
                 ],
               ),
-              expandedHeight: deviceHeight * 0.3,
+              expandedHeight: deviceHeight * 0.35,
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
                   padding: EdgeInsets.only(top: deviceHeight * 0.10),
@@ -130,51 +125,40 @@ class _MyWidgetState extends ConsumerState<HomePage>
               initialItemCount: 2,
               itemBuilder: (context, index, animation) {
                 return Padding(
-                  padding: EdgeInsets.only(top: deviceHeight * 0.01),
+                  padding: EdgeInsets.only(top: deviceHeight * 0.05),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            "assests/sale-2.png",
-                            width: deviceWidth * 0.1,
-                            height: deviceHeight * 0.1,
+                      Padding(
+                        padding: EdgeInsets.only(left: deviceWidth * 0.015),
+                        child: Text(
+                          selectedMap?["in area"] ?? "   In Your Area",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: deviceWidth * 0.05,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            selectedMap?["in area"] ?? "   In Your Area:",
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                       BusinessList(
                         animationController: _animationController,
                         isList: true,
                         bList: widget.availableBusinesses,
                       ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              "assests/light.png",
-                              width: deviceWidth * 0.1,
-                              height: deviceHeight * 0.1,
-                            ),
-                            Text(
-                              textAlign: TextAlign.start,
-                              selectedMap?["favor"] ?? "   Favorites:",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ]),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: deviceHeight * 0.05, left: deviceWidth * 0.05),
+                        child: Text(
+                          selectedMap?["favor"] ?? "   Favorites:",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: deviceWidth * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                       BusinessList(
                         animationController: _animationController,
                         isList: true,

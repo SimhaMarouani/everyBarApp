@@ -34,31 +34,80 @@ class _BusinessSalesListState extends State<BusinessList> {
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
-    final animationController = widget.animationController;
     const offset = Offset(0.7, 0);
-    final height = deviceHeight * 0.25;
-    final widgetToDisplay = ListView.builder(
-      padding: const EdgeInsets.only(top: 10),
-      itemCount: widget.bList.length,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.only(
-            top: 8.0, left: deviceWidth * 0.05, right: 8.0, bottom: 8),
-        child: BusinesListItem(
-          businessItem: widget.bList[index],
-          onSelect: () {
-            _selectBusiness(context, widget.bList[index]);
-          },
-        ),
-      ),
-    );
 
     return AnimatedBuilder(
         animation:
             widget.animationController ?? const AlwaysStoppedAnimation(0.0),
         child: SizedBox(
-          height: height,
-          child: widgetToDisplay,
+          height: deviceHeight * 0.25,
+          width: deviceWidth,
+          child: ListView.builder(
+            padding: const EdgeInsets.only(top: 10),
+            itemCount: widget.bList.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.only(
+                  top: 8.0, left: deviceWidth * 0.05, right: 8.0, bottom: 8),
+              child: Column(
+                children: [
+                  Flexible(
+                    flex: 5,
+                    child: SizedBox(
+                      width: deviceWidth * 0.35,
+                      child: BusinesListItem(
+                        businessItem: widget.bList[index],
+                        onSelect: () {
+                          _selectBusiness(context, widget.bList[index]);
+                        },
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 4,
+                    child: Container(
+                      height: deviceHeight * 0.25 * 0.45,
+                      width: deviceWidth * 0.35,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(16),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              right: deviceWidth * 0.35 * 0.1,
+                              top: deviceHeight * 0.25 * 0.4 * 0.1,
+                            ),
+                            child: Text(
+                              widget.bList[index].name,
+                              style: TextStyle(
+                                  fontSize: deviceWidth * 0.045,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: deviceWidth * 0.35 * 0.1),
+                            child: Text(
+                              widget.bList[index].location.toString(),
+                              style: TextStyle(
+                                  fontSize: deviceWidth * 0.035,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
         builder: (ctx, child) {
           return SlideTransition(

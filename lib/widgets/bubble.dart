@@ -20,14 +20,6 @@ class Bubble extends StatefulWidget {
 }
 
 class _BubbleState extends State<Bubble> {
-  bool _selected = true;
-
-  void _toggleSelected() {
-    setState(() {
-      _selected = !_selected;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Positioned(

@@ -88,6 +88,7 @@ class _BubbleListState extends State<BubbleList> {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
     final businessesBubbles = generateBubbles(deviceWidth, deviceHeight);
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(

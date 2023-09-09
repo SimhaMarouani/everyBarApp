@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iBar/models/business_model.dart';
+import 'package:http/http.dart' as http;
 
 class BusinesListItem extends StatelessWidget {
   const BusinesListItem({
@@ -14,39 +17,37 @@ class BusinesListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height;
-    final deviceWidth = MediaQuery.of(context).size.width;
-    return SizedBox(
-      width: deviceWidth * 0.38,
-      child: ElevatedButton(
-        onPressed: onSelect,
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        child: Stack(
-          fit: StackFit.loose,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Image.asset(
-                "assests/home.png",
-              ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Text(
-                businessItem.name,
-                style: GoogleFonts.getFont(
-                  'Open Sans',
-                  fontSize: deviceHeight * 0.3 * 0.1,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
-            ),
-          ],
-        ),
+    const String defaultImageUrl = 'assests/home.png';
+
+    Future<Uint8List> _fetchImage() async {
+      try {
+        final response = await http.get(Uri.parse(businessItem.imageUrl!));
+        if (response.statusCode == 200) {
+          return response.bodyBytes;
+        }
+      } catch (e) {}
+      return Uint8List(0);
+    }
+
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+      child: FutureBuilder<Uint8List>(
+        future: _fetchImage(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.data != null && snapshot.data!.isNotEmpty) {
+            return Image.memory(
+              snapshot.data!,
+              fit: BoxFit.cover,
+            );
+          } else {
+            return Image.asset(
+              defaultImageUrl,
+            );
+          }
+        },
       ),
     );
   }
