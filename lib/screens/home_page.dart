@@ -3,6 +3,9 @@ import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/data/data.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/language_provider.dart';
+import 'package:iBar/screens/drink_food_screen.dart';
+import 'package:iBar/screens/drink_screen.dart';
+import 'package:iBar/screens/profile_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
 import 'package:iBar/widgets/bubble_list.dart';
 import 'package:iBar/widgets/business_list_generator.dart';
@@ -46,6 +49,33 @@ class _MyWidgetState extends ConsumerState<HomePage>
         builder: (ctx) => SearchScreen(
           passStr: str,
         ),
+      ),
+    );
+  }
+
+  void onProfilePress(String str) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => ProfileScreen(),
+      ),
+    );
+  }
+
+  void onDrinkPress(String str) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => DrinkScreen(),
+      ),
+    );
+  }
+
+  void onDrinkFoodPress(String str) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => DrinkFoodScreen(),
       ),
     );
   }
