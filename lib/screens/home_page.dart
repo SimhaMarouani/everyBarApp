@@ -113,7 +113,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
                   ),
                 ],
               ),
-              expandedHeight: deviceHeight * 0.35,
+              expandedHeight: deviceHeight * 0.3,
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
                   padding: EdgeInsets.only(top: deviceHeight * 0.10),

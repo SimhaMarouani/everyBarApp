@@ -36,18 +36,16 @@ class _BubbleState extends State<Bubble> {
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
               colors: [
-                Theme.of(context).primaryColor,
+                Theme.of(context).primaryColor.withOpacity(0.01),
                 Theme.of(context).secondaryHeaderColor,
-                Theme.of(context).highlightColor,
-                Colors.blueGrey,
               ],
             ),
             boxShadow: [
               BoxShadow(
                 blurStyle: BlurStyle.inner,
                 color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
+                spreadRadius: 3,
+                blurRadius: 5,
                 offset: const Offset(0, 2),
               ),
             ],

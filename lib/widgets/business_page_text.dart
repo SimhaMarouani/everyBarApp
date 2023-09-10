@@ -37,7 +37,6 @@ class BusinessPageTexts extends ConsumerWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
           preText + param + midText,

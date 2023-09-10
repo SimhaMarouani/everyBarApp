@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/language_provider.dart';
-import 'package:iBar/widgets/RaitingBar.dart';
+import 'package:iBar/widgets/raiting_bar.dart';
 import 'package:iBar/widgets/business_home_page_buttons.dart';
 import 'package:iBar/widgets/business_page_text.dart';
 import 'package:http/http.dart' as http;
@@ -46,7 +46,7 @@ class BusinessHomePage extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: deviceHeight * 0.4,
               child: Stack(
                 children: [
@@ -94,7 +94,7 @@ class BusinessHomePage extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.only(top: deviceHeight * 0.02),
               child: Text(
                 businessModel.name,
                 style: TextStyle(
@@ -104,9 +104,12 @@ class BusinessHomePage extends ConsumerWidget {
               ),
             ),
             BusinessPageTexts(business: businessModel),
-            StarRating(
-              initialRating: businessModel.ratingAvg,
-              onRatingChanged: _handleRatingChanged,
+            Padding(
+              padding: EdgeInsets.only(top: deviceHeight * 0.01),
+              child: StarRating(
+                initialRating: businessModel.ratingAvg,
+                onRatingChanged: _handleRatingChanged,
+              ),
             ),
           ],
         ),
