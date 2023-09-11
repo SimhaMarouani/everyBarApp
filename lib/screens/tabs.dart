@@ -5,7 +5,7 @@ import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/home_page.dart';
-import 'package:iBar/screens/login_screen.dart';
+import 'package:iBar/screens/profile_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
 import 'package:iBar/widgets/main_drawer.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -31,16 +31,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     _animationController.forward();
   }
 
-  void _setScreen(String id) async {
-    if (id == 'profile') {
-      await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (ctx) => GoogleSignApp(),
-        ),
-      );
-    }
-  }
+  void _setScreen(String id) async {}
 
   List<Widget> _pages = [];
 
