@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/data/data.dart';
-import 'package:iBar/providers/favourite_provider.dart';
-import 'package:iBar/providers/filterd_business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/home_page.dart';
-import 'package:iBar/screens/profile_screen.dart';
+import 'package:iBar/screens/login_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
 import 'package:iBar/widgets/main_drawer.dart';
-import 'package:iBar/widgets/search_res.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Tabs extends ConsumerStatefulWidget {
   const Tabs({super.key});
@@ -35,8 +32,14 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   }
 
   void _setScreen(String id) async {
-    Navigator.of(context).pop();
-    // todo: set screen
+    if (id == 'profile') {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (ctx) => GoogleSignApp(),
+        ),
+      );
+    }
   }
 
   List<Widget> _pages = [];
@@ -84,7 +87,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
       backgroundColor = const Color.fromARGB(255, 230, 230, 230);
     }
     return Scaffold(
-      drawer: MainDrawer(onSelectScreen: _setScreen),
+      // drawer: MainDrawer(onSelectScreen: _setScreen),
       backgroundColor: backgroundColor,
       body: AnimatedSwitcher(
         duration: Duration(seconds: 1), // Adjust animation duration
