@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/screens/business_home_page.dart';
-import 'package:iBar/widgets/business_item.dart';
+import 'package:iBar/widgets/business_item_w_img.dart';
 
-class BusinessList extends StatefulWidget {
-  const BusinessList({
+class BusinessListH extends StatefulWidget {
+  const BusinessListH({
     super.key,
     required this.animationController,
     required this.isList,
@@ -15,10 +15,10 @@ class BusinessList extends StatefulWidget {
   final List<Business> bList;
 
   @override
-  State<BusinessList> createState() => _BusinessSalesListState();
+  State<BusinessListH> createState() => _BusinessSalesListState();
 }
 
-class _BusinessSalesListState extends State<BusinessList> {
+class _BusinessSalesListState extends State<BusinessListH> {
   void _selectBusiness(BuildContext context, Business business) {
     Navigator.push(
       context,

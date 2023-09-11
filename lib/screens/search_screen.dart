@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iBar/models/business_model.dart';
-import 'package:iBar/widgets/business_list_generator.dart';
+import 'package:iBar/widgets/business_list_horizontal.dart';
+import 'package:iBar/widgets/business_list_vertical.dart';
 import 'package:iBar/widgets/search_bar.dart';
 import 'package:iBar/data/data.dart';
 import 'package:http/http.dart' as http;
@@ -130,6 +131,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
+    final deviceWidth = MediaQuery.of(context).size.width;
     return RawKeyboardListener(
       focusNode: _focusNodeOfSilverAppBar,
       onKey: handleKeyEvent,
@@ -157,7 +159,9 @@ class _SearchScreenState extends State<SearchScreen> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return;
+                    return SizedBox(
+                        height: deviceHeight * 0.6,
+                        child: BusinessListV(bList: businessList));
                   },
                 ),
               ),

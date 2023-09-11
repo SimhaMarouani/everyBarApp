@@ -60,7 +60,9 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
 
     _pages = [
       DrinkFoodScreen(),
-      DrinkScreen(),
+      DrinkScreen(
+        availableBusinesses: businessList,
+      ),
       HomePage(
         availableBusinesses: businessList,
         onSelectScreen: _setScreen,

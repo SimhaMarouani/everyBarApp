@@ -11,6 +11,8 @@ const businessList = [
     menu: {"Cocktail": 41.50, "Cola": 13},
     imageUrl:
         "https://lh3.googleusercontent.com/p/AF1QipO30Q_oXy7kil1I_rfqbCWV90d23Njc9Jw_bF_x=s1360-w1360-h1020",
+    logoUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLEzQYhmsw8L-9rWNwcQH7ROJSK6N99esV3hRTUEVhlA&s",
     openTime: "20:00",
     closedTime: "2:00",
     location: "נחלת שבעה 11",

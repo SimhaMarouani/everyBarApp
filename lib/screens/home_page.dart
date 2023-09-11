@@ -8,7 +8,7 @@ import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/profile_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
 import 'package:iBar/widgets/bubble_list.dart';
-import 'package:iBar/widgets/business_list_generator.dart';
+import 'package:iBar/widgets/business_list_horizontal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -66,7 +66,9 @@ class _MyWidgetState extends ConsumerState<HomePage>
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => DrinkScreen(),
+        builder: (ctx) => DrinkScreen(
+          availableBusinesses: businessList,
+        ),
       ),
     );
   }
@@ -171,7 +173,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
                           ),
                         ),
                       ),
-                      BusinessList(
+                      BusinessListH(
                         animationController: _animationController,
                         isList: true,
                         bList: widget.availableBusinesses,
@@ -189,7 +191,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
                           ),
                         ),
                       ),
-                      BusinessList(
+                      BusinessListH(
                         animationController: _animationController,
                         isList: true,
                         bList: widget.availableBusinesses,

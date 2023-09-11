@@ -4,6 +4,7 @@ class Business {
   const Business({
     required this.name,
     this.imageUrl,
+    this.logoUrl,
     required this.openTime,
     required this.closedTime,
     required this.location,
@@ -19,6 +20,8 @@ class Business {
   });
   final String name;
   final String? imageUrl;
+  final String? logoUrl;
+
   final String openTime;
   final String closedTime;
   final String location;
