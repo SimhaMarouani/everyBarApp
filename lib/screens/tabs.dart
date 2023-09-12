@@ -80,7 +80,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
       backgroundColor = const Color.fromARGB(255, 230, 230, 230);
     }
     return Scaffold(
-      // drawer: MainDrawer(onSelectScreen: _setScreen),
+      drawer: MainDrawer(onSelectScreen: _setScreen),
       backgroundColor: backgroundColor,
       body: AnimatedSwitcher(
         duration: Duration(seconds: 1), // Adjust animation duration
