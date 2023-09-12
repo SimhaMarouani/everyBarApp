@@ -3,6 +3,7 @@ import 'package:iBar/models/business_model.dart';
 import 'package:iBar/screens/business_home_page.dart';
 import 'package:iBar/widgets/business_item_w_img.dart';
 import 'package:iBar/widgets/business_item_w_logo.dart';
+import 'package:iBar/widgets/vertical_list_text.dart';
 
 class BusinessListV extends StatefulWidget {
   const BusinessListV({
@@ -39,12 +40,13 @@ class _BusinessVListState extends State<BusinessListV> {
         return GestureDetector(
           onTap: () => _selectBusiness(context, business),
           child: Padding(
-            padding: EdgeInsets.all(deviceHeight * 0.02),
+            padding: const EdgeInsets.all(10.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: deviceHeight * 0.2,
-                  width: deviceWidth * 0.35,
+                  height: deviceHeight * 0.17,
+                  width: deviceWidth * 0.45,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -52,37 +54,11 @@ class _BusinessVListState extends State<BusinessListV> {
                       bottomLeft: Radius.circular(16),
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          right: deviceWidth * 0.35 * 0.1,
-                          top: deviceHeight * 0.25 * 0.4 * 0.1,
-                        ),
-                        child: Text(
-                          widget.bList[index].name,
-                          style: TextStyle(
-                              fontSize: deviceWidth * 0.045,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(right: deviceWidth * 0.35 * 0.1),
-                        child: Text(
-                          widget.bList[index].location.toString(),
-                          style: TextStyle(
-                              fontSize: deviceWidth * 0.035,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      )
-                    ],
-                  ),
+                  child: VerticalListTexts(business: widget.bList[index]),
                 ),
                 SizedBox(
-                  width: deviceWidth * 0.5,
-                  height: deviceHeight * 0.2,
+                  width: deviceHeight * 0.17,
+                  height: deviceHeight * 0.17,
                   child: BusinesListItemLogo(
                     businessItem: widget.bList[index],
                     onSelect: () {

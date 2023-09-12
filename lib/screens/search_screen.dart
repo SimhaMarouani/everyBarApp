@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iBar/models/business_model.dart';
-import 'package:iBar/widgets/business_list_horizontal.dart';
 import 'package:iBar/widgets/business_list_vertical.dart';
 import 'package:iBar/widgets/search_bar.dart';
 import 'package:iBar/data/data.dart';
@@ -135,37 +134,24 @@ class _SearchScreenState extends State<SearchScreen> {
     return RawKeyboardListener(
       focusNode: _focusNodeOfSilverAppBar,
       onKey: handleKeyEvent,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.1,
-              child: Image.asset(
-                "assests/background.jpg",
-                fit: BoxFit.fill,
-              ),
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: MySearchBar(
+              focusNode: _focusNodeOfSearchBar,
+              onSearch: searchRes,
+              searchController: _searchController,
             ),
+            expandedHeight: deviceHeight * 0.2,
           ),
-          CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                title: MySearchBar(
-                  focusNode: _focusNodeOfSearchBar,
-                  onSearch: searchRes,
-                  searchController: _searchController,
-                ),
-                expandedHeight: deviceHeight * 0.2,
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return SizedBox(
-                        height: deviceHeight * 0.6,
-                        child: BusinessListV(bList: businessList));
-                  },
-                ),
-              ),
-            ],
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return SizedBox(
+                    height: deviceHeight * 0.63,
+                    child: BusinessListV(bList: businessList));
+              },
+            ),
           ),
         ],
       ),
