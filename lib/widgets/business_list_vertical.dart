@@ -31,7 +31,6 @@ class _BusinessVListState extends State<BusinessListV> {
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
-    const offset = Offset(0.7, 0);
 
     return ListView.builder(
       itemCount: widget.bList.length,
