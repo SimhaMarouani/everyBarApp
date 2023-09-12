@@ -5,7 +5,7 @@ class StarRating extends StatefulWidget {
   final int initialRating;
   final int maxRating;
 
-  StarRating({
+  const StarRating({super.key, 
     required this.onRatingChanged,
     this.initialRating = 0,
     this.maxRating = 5,
