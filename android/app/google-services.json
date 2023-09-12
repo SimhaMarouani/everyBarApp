@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "47799904669",
+    "project_id": "everybar-c6073",
+    "storage_bucket": "everybar-c6073.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47799904669:android:396771f5cff31a804ea774",
+        "android_client_info": {
+          "package_name": "com.example.ibar_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvlB3n8xlARUdM_obtil1mhRCcEQuvXCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

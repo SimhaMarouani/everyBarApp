@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iBar/data/data.dart';
@@ -23,6 +24,11 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   late Animation<double> _animation;
 
   String str = "";
+
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
+
   void selectPage(int indexPage) {
     setState(() {
       _selectedPageIndex = indexPage;

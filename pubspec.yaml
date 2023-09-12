@@ -34,8 +34,7 @@ dependencies:
   http: ^0.13.3
   provider: ^5.0.0
   google_sign_in: ^6.1.5
-  # firebase_auth: ^4.9.0
-  # firebase_core: ^2.15.1
+  firebase_auth: ^4.9.0
 
 
 
@@ -47,6 +46,7 @@ dependencies:
   google_fonts: ^4.0.4
   transparent_image: ^2.0.1
   flutter_riverpod: ^2.3.6
+  firebase_core: ^2.15.1
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +82,9 @@ flutter:
     - assests/background.jpg
     - assests/baruh.png
     - assests/hataklit.png
+    - assests/apple.png
+    - assests/google.png
+
 
 
   #   - images/a_dot_ham.jpeg

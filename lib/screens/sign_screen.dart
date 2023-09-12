@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iBar/widgets/my_text_field.dart';
 import 'package:iBar/widgets/signInButton.dart';
+import 'package:iBar/widgets/square_tile.dart';
 
 class SignScreen extends StatelessWidget {
   SignScreen({super.key});
@@ -8,16 +10,30 @@ class SignScreen extends StatelessWidget {
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void signIn() {}
+  void signIn() async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: userNameController.text, password: passwordController.text);
+      if (credential.user != null) {
+        print(credential.user!.email.toString());
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height;
-    final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
               const Icon(Icons.lock, size: 100),
@@ -82,8 +98,30 @@ class SignScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 50),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SquareTile(imagePath: "assests/google.png"),
+                  SizedBox(width: 25),
+                  SquareTile(imagePath: "assests/apple.png"),
+                ],
+              ),
+              const SizedBox(height: 50),
               Row(
-                children: [Image.asset("assests/google.png")],
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Not a member?",
+                    style: TextStyle(color: Colors.grey[700]),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    "Sign Up",
+                    style: TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.bold),
+                  )
+                ],
               )
             ],
           ),
