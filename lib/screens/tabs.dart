@@ -7,8 +7,8 @@ import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/home_page.dart';
 import 'package:iBar/screens/profile_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
+import 'package:iBar/screens/sign_screen.dart';
 import 'package:iBar/widgets/main_drawer.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class Tabs extends ConsumerStatefulWidget {
   const Tabs({super.key});
@@ -31,7 +31,12 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     _animationController.forward();
   }
 
-  void _setScreen(String id) async {}
+  void _setScreen(String id) async {
+    if (id == "profile") {
+      await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SignScreen()));
+    }
+  }
 
   List<Widget> _pages = [];
 
@@ -40,7 +45,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 700), // Adjust animation duration
+      duration: const Duration(milliseconds: 700), // Adjust animation duration
     );
 
     _animation = Tween<double>(begin: 0, end: 1).animate(
@@ -53,8 +58,8 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     _animationController.forward();
 
     _pages = [
-      DrinkFoodScreen(),
-      DrinkScreen(),
+      const DrinkFoodScreen(),
+      const DrinkScreen(),
       HomePage(
         availableBusinesses: businessList,
         onSelectScreen: _setScreen,
@@ -62,7 +67,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
       SearchScreen(
         passStr: str,
       ),
-      ProfileScreen(),
+      const ProfileScreen(),
     ];
   }
 
@@ -78,10 +83,10 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
       backgroundColor = const Color.fromARGB(255, 230, 230, 230);
     }
     return Scaffold(
-      // drawer: MainDrawer(onSelectScreen: _setScreen),
+      drawer: MainDrawer(onSelectScreen: _setScreen),
       backgroundColor: backgroundColor,
       body: AnimatedSwitcher(
-        duration: Duration(seconds: 1), // Adjust animation duration
+        duration: const Duration(seconds: 1), // Adjust animation duration
         child: FadeTransition(
           opacity: _animation,
           child: _pages[_selectedPageIndex],

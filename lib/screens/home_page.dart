@@ -57,7 +57,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => ProfileScreen(),
+        builder: (ctx) => const ProfileScreen(),
       ),
     );
   }
@@ -66,7 +66,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => DrinkScreen(),
+        builder: (ctx) => const DrinkScreen(),
       ),
     );
   }
@@ -75,7 +75,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => DrinkFoodScreen(),
+        builder: (ctx) => const DrinkFoodScreen(),
       ),
     );
   }
@@ -147,7 +147,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
                   padding: EdgeInsets.only(top: deviceHeight * 0.10),
-                  child: BubbleList(businessList: businessList),
+                  child: const BubbleList(businessList: businessList),
                 ),
               ),
             ),

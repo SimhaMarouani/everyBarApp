@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iBar/models/business_model.dart';
-import 'package:iBar/widgets/business_list_generator.dart';
 import 'package:iBar/widgets/search_bar.dart';
 import 'package:iBar/data/data.dart';
 import 'package:http/http.dart' as http;

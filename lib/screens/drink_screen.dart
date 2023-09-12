@@ -11,7 +11,7 @@ class _DrinkScreenState extends State<DrinkScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("drink screen"),
+      child: const Text("drink screen"),
     );
   }
 }

@@ -7,7 +7,7 @@ class Bubble extends StatefulWidget {
   final void Function() onSelect;
   final String name;
 
-  Bubble({
+  const Bubble({super.key, 
     required this.left,
     required this.top,
     required this.size,
