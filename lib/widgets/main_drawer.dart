@@ -4,9 +4,11 @@ class MainDrawer extends StatelessWidget {
   const MainDrawer({
     super.key,
     required this.onSelectScreen,
+    required this.onSignOut,
   });
 
   final void Function(String identifier) onSelectScreen;
+  final void Function() onSignOut;
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +108,21 @@ class MainDrawer extends StatelessWidget {
                   )),
           onTap: () {
             onSelectScreen('profile');
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.exit_to_app,
+            size: 26,
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          title: Text('Sign Out',
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 24,
+                  )),
+          onTap: () {
+            onSignOut();
           },
         ),
       ]),

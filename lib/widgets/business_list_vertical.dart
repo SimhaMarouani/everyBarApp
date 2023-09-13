@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/screens/business_home_page.dart';
-import 'package:iBar/widgets/business_item_w_img.dart';
 import 'package:iBar/widgets/business_item_w_logo.dart';
 import 'package:iBar/widgets/vertical_list_text.dart';
 

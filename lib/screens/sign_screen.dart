@@ -13,15 +13,19 @@ class SignScreen extends StatelessWidget {
   void signIn() async {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: userNameController.text, password: passwordController.text);
+        email: userNameController.text,
+        password: passwordController.text,
+      );
       if (credential.user != null) {
-        print(credential.user!.email.toString());
+        print(credential.user!.uid.toString());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
+      } else {
+        print("caught something else");
       }
     }
   }

@@ -12,10 +12,12 @@ class AuthPage extends StatelessWidget {
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return const Tabs();
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator(); // Show a loading indicator.
+          } else if (snapshot.hasData) {
+            return const Tabs(); // User is already signed in.
           } else {
-            return SignScreen();
+            return SignScreen(); // Show the sign-in screen.
           }
         },
       ),

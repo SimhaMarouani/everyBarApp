@@ -6,6 +6,7 @@ import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/home_page.dart';
+import 'package:iBar/screens/login_page.dart';
 import 'package:iBar/screens/profile_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
 import 'package:iBar/screens/sign_screen.dart';
@@ -26,6 +27,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   String str = "";
 
   void signUserOut() {
+    print("sign out");
     FirebaseAuth.instance.signOut();
   }
 
@@ -40,7 +42,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   void _setScreen(String id) async {
     if (id == "profile") {
       await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SignScreen()));
+          context, MaterialPageRoute(builder: (context) => AuthPage()));
     }
   }
 
@@ -64,8 +66,8 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     _animationController.forward();
 
     _pages = [
-      DrinkFoodScreen(),
-      DrinkScreen(
+      const DrinkFoodScreen(),
+      const DrinkScreen(
         availableBusinesses: businessList,
       ),
       HomePage(
@@ -91,7 +93,10 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
       backgroundColor = const Color.fromARGB(255, 230, 230, 230);
     }
     return Scaffold(
-      drawer: MainDrawer(onSelectScreen: _setScreen),
+      drawer: MainDrawer(
+        onSelectScreen: _setScreen,
+        onSignOut: signUserOut,
+      ),
       backgroundColor: backgroundColor,
       body: AnimatedSwitcher(
         duration: const Duration(seconds: 1), // Adjust animation duration
