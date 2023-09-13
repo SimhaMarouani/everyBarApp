@@ -49,6 +49,10 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    final businessesWithFood =
+        businessList.where((business) => business.hasFood).toList();
+    final businessesWithoutFood =
+        businessList.where((business) => !business.hasFood).toList();
     super.initState();
     _animationController = AnimationController(
       vsync: this,
@@ -65,9 +69,9 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     _animationController.forward();
 
     _pages = [
-      const DrinkFoodScreen(),
-      const DrinkScreen(
-        availableBusinesses: businessList,
+      DrinkFoodScreen(),
+      DrinkScreen(
+        availableBusinesses: businessesWithoutFood,
       ),
       HomePage(
         availableBusinesses: businessList,

@@ -1,38 +1,28 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iBar/providers/business_provider.dart';
+import 'package:iBar/models/business_model.dart';
 
-enum Filter { happyHour }
+class FilterdBusiNotifier extends StateNotifier<List<Business>> {
+  FilterdBusiNotifier() : super([]);
 
-class FlitersNotifier extends StateNotifier<Map<Filter, bool>> {
-  FlitersNotifier()
-      : super({
-          Filter.happyHour: false,
-        });
+  bool toggleMealFavoriteStatus(Business busi, String condition) {
+    final busiIsFavorite = state.contains(busi);
 
-  void setFilter(Filter filter, bool isActive) {
-    state = {
-      ...state,
-      filter: isActive,
-    };
-  }
-
-  void setFilters(Map<Filter, bool> chosenFilters) {
-    state = chosenFilters;
+    if (busiIsFavorite) {
+      state = state.where((m) => m.name != busi.name).toList();
+      return false;
+    } else {
+      if (busi.hasFood) {
+        // Only add if the business has food
+        state = [...state, busi];
+        return true;
+      } else {
+        return false; // Business doesn't have food, don't add to favorites
+      }
+    }
   }
 }
 
-final filtersProvider =
-    StateNotifierProvider<FlitersNotifier, Map<Filter, bool>>(
-  (ref) => FlitersNotifier(),
-);
-
-final filteredBusinessProider = Provider((ref) {
-  final businesses = ref.watch(availbusiProvider);
-  final activeFilters = ref.watch(filtersProvider);
-  return businesses.where((business) {
-    if (activeFilters[Filter.happyHour]! && !business.hasHappyHour) {
-      return false;
-    }
-    return true;
-  }).toList();
+final hasFoodBusinessProvider =
+    StateNotifierProvider<FilterdBusiNotifier, List<Business>>((ref) {
+  return FilterdBusiNotifier();
 });

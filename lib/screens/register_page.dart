@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iBar/services/auth_service.dart';
 import 'package:iBar/widgets/my_text_field.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:iBar/widgets/signInButton.dart';
 import 'package:iBar/widgets/square_tile.dart';
 
@@ -29,10 +31,12 @@ class _RegisterPageState extends State<RegisterPage> {
     );
     try {
       if (confirmPassController.text == passwordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        final credential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: userNameController.text,
           password: passwordController.text,
         );
+        addUser(credential.user!.email.toString(), credential.user!.uid);
       } else {
         wrongShowMessage("Passwords dont match");
       }
@@ -56,6 +60,22 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       },
     );
+  }
+
+  Future<void> addUser(String email, String uid) async {
+    const serverUrl =
+        'http://127.0.0.1:5000'; // Replace with your server's IP address
+    final response = await http.post(
+      Uri.parse('$serverUrl/add_user'),
+      body: json.encode({'email': email, 'uid': uid}),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      print('user added successfully');
+    } else {
+      print('Failed to add user. Status code: ${response.statusCode}');
+    }
   }
 
   @override

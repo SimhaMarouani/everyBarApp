@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/data/data.dart';
 import 'package:iBar/models/business_model.dart';
+import 'package:iBar/providers/business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
