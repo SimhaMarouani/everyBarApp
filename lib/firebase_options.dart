@@ -66,6 +66,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '47799904669',
     projectId: 'everybar-c6073',
     storageBucket: 'everybar-c6073.appspot.com',
+    iosClientId: '47799904669-lolc8hrs4eck55fjhpk2c3k3s9ittcme.apps.googleusercontent.com',
     iosBundleId: 'com.example.iBarApp',
   );
 
@@ -75,6 +76,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '47799904669',
     projectId: 'everybar-c6073',
     storageBucket: 'everybar-c6073.appspot.com',
+    iosClientId: '47799904669-audg318gr6tm17crsqp5rno3ooup1bgp.apps.googleusercontent.com',
     iosBundleId: 'com.example.schoolInfoApp.RunnerTests',
   );
 }

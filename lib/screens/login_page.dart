@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:iBar/screens/sign_screen.dart';
+import 'package:iBar/screens/loginorreg.dart';
 import 'package:iBar/screens/tabs.dart';
 
 class AuthPage extends StatelessWidget {
@@ -13,11 +13,17 @@ class AuthPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // Show a loading indicator.
+            return const CircularProgressIndicator();
           } else if (snapshot.hasData) {
-            return const Tabs(); // User is already signed in.
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const Tabs()),
+              );
+            });
+            return Container();
           } else {
-            return SignScreen(); // Show the sign-in screen.
+            return const LoginOrReg();
           }
         },
       ),

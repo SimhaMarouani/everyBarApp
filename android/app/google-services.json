@@ -12,7 +12,12 @@
           "package_name": "com.example.ibar_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "47799904669-6alfursurpno9vhtccktnico1v7gga8d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDvlB3n8xlARUdM_obtil1mhRCcEQuvXCo"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47799904669-6alfursurpno9vhtccktnico1v7gga8d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "47799904669-audg318gr6tm17crsqp5rno3ooup1bgp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.schoolInfoApp.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }

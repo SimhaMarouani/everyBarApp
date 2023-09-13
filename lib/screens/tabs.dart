@@ -9,7 +9,6 @@ import 'package:iBar/screens/home_page.dart';
 import 'package:iBar/screens/login_page.dart';
 import 'package:iBar/screens/profile_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
-import 'package:iBar/screens/sign_screen.dart';
 import 'package:iBar/widgets/main_drawer.dart';
 
 class Tabs extends ConsumerStatefulWidget {
@@ -27,8 +26,8 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   String str = "";
 
   void signUserOut() {
-    print("sign out");
     FirebaseAuth.instance.signOut();
+    selectPage(2);
   }
 
   void selectPage(int indexPage) {
@@ -42,7 +41,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   void _setScreen(String id) async {
     if (id == "profile") {
       await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => AuthPage()));
+          context, MaterialPageRoute(builder: (context) => const AuthPage()));
     }
   }
 
@@ -82,7 +81,15 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     final selectedLanguage = ref.watch(currentLanguageProvider);
 
     Brightness brightness = MediaQuery.of(context).platformBrightness;
@@ -94,6 +101,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     }
     return Scaffold(
       drawer: MainDrawer(
+        user: user == null ? "Guest" : user.email.toString(),
         onSelectScreen: _setScreen,
         onSignOut: signUserOut,
       ),
