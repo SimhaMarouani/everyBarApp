@@ -1,8 +1,6 @@
-import 'dart:typed_data';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:iBar/models/business_model.dart';
-import 'package:http/http.dart' as http;
 
 class BusinesListItem extends StatelessWidget {
   const BusinesListItem({
@@ -17,8 +15,11 @@ class BusinesListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-        child: Image.memory(base64.decode(businessItem.imageUrl!)));
+      borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+      child: Image.memory(
+        base64.decode(businessItem.imageUrl!),
+      ),
+    );
   }
 }

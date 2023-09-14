@@ -42,7 +42,9 @@ class MainDrawer extends StatelessWidget {
                     fit: BoxFit
                         .scaleDown, // This ensures the text is scaled down if needed
                     child: Text(
-                      user == null ? "Guest" : user.email.toString(),
+                      user != null && user.emailVerified
+                          ? user.email.toString()
+                          : "Guest",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,

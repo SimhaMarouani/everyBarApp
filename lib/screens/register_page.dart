@@ -38,6 +38,8 @@ class _RegisterPageState extends State<RegisterPage> {
           email: userNameController.text,
           password: passwordController.text,
         );
+        // Send email verification
+        await credential.user!.sendEmailVerification();
         addUser(credential.user!.email.toString(), credential.user!.uid);
       } else {
         wrongShowMessage("Passwords dont match");

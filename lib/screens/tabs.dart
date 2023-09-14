@@ -80,7 +80,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
         availableBusinesses: businessList,
       ),
       const DrinkScreen(
-        availableBusinesses: businessesWithoutFood,
+        availableBusinesses: businessList,
       ),
       HomePage(
         onSelectScreen: _setScreen,
