@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iBar/data/data.dart';
 import 'package:iBar/providers/language_provider.dart';
+import 'package:iBar/screens/add_business_screen.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/home_page.dart';
@@ -69,11 +70,9 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     _animationController.forward();
 
     _pages = [
-      const DrinkFoodScreen(
-        availableBusinesses: businessList,
-      ),
+      const AddBusinessScreen(),
       const DrinkScreen(
-        availableBusinesses: businessesWithoutFood,
+        availableBusinesses: businessList,
       ),
       HomePage(
         availableBusinesses: businessList,

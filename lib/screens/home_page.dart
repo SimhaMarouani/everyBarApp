@@ -4,6 +4,7 @@ import 'package:iBar/data/data.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
+import 'package:iBar/screens/add_business_screen.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/profile_screen.dart';
@@ -78,9 +79,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => const DrinkFoodScreen(
-          availableBusinesses: businessList,
-        ),
+        builder: (ctx) => const AddBusinessScreen(),
       ),
     );
   }
