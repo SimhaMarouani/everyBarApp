@@ -6,8 +6,7 @@ import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/widgets/raiting_bar.dart';
 import 'package:iBar/widgets/business_home_page_buttons.dart';
 import 'package:iBar/widgets/business_page_text.dart';
-import 'package:http/http.dart' as http;
-import 'dart:typed_data';
+import 'dart:convert';
 
 import 'package:iBar/widgets/business_page_top.dart';
 
@@ -21,18 +20,6 @@ class BusinessHomePage extends ConsumerWidget {
   final String defaultImageUrl = 'assests/home.png';
 
   void _handleRatingChanged(int rating) {}
-
-  Future<Uint8List> _fetchImage() async {
-    try {
-      final response = await http.get(Uri.parse(businessModel.imageUrl!));
-      if (response.statusCode == 200) {
-        return response.bodyBytes;
-      }
-    } catch (e) {
-      print(e);
-    }
-    return Uint8List(0);
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,28 +38,7 @@ class BusinessHomePage extends ConsumerWidget {
               child: Stack(
                 children: [
                   Center(
-                    child: FutureBuilder<Uint8List>(
-                      future: _fetchImage(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        } else if (snapshot.data != null &&
-                            snapshot.data!.isNotEmpty) {
-                          return Image.memory(
-                            width: double.infinity,
-                            snapshot.data!,
-                            height: deviceHeight * 0.35,
-                            fit: BoxFit.cover,
-                          );
-                        } else {
-                          return Image.asset(
-                            defaultImageUrl,
-                            fit: BoxFit.cover,
-                          );
-                        }
-                      },
-                    ),
+                    child: Image.memory(base64.decode(businessModel.imageUrl!)),
                   ),
                   Positioned(
                     child: Container(

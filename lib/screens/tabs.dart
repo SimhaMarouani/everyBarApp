@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iBar/data/data.dart';
+import 'package:iBar/models/business_model.dart';
+import 'package:iBar/providers/business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
@@ -76,7 +78,6 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
         availableBusinesses: businessesWithoutFood,
       ),
       HomePage(
-        availableBusinesses: businessList,
         onSelectScreen: _setScreen,
       ),
       SearchScreen(

@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:http/http.dart' as http;
@@ -16,35 +16,9 @@ class BusinesListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String defaultImageUrl = 'assests/home.png';
-
-    Future<Uint8List> _fetchImage() async {
-      try {
-        final response = await http.get(Uri.parse(businessItem.imageUrl!));
-        if (response.statusCode == 200) {
-          return response.bodyBytes;
-        }
-      } catch (e) {}
-      return Uint8List(0);
-    }
-
     return ClipRRect(
-      borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-      child: FutureBuilder<Uint8List>(
-        future: _fetchImage(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.data != null && snapshot.data!.isNotEmpty) {
-            return Image.memory(snapshot.data!, fit: BoxFit.cover);
-          } else {
-            return Image.asset(
-              defaultImageUrl,
-            );
-          }
-        },
-      ),
-    );
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+        child: Image.memory(base64.decode(businessItem.imageUrl!)));
   }
 }
