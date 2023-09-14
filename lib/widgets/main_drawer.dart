@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -5,15 +6,14 @@ class MainDrawer extends StatelessWidget {
     super.key,
     required this.onSelectScreen,
     required this.onSignOut,
-    required this.user,
   });
 
   final void Function(String identifier) onSelectScreen;
   final void Function() onSignOut;
-  final String user;
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
     return Drawer(
       child: Column(
         children: [
@@ -42,7 +42,7 @@ class MainDrawer extends StatelessWidget {
                     fit: BoxFit
                         .scaleDown, // This ensures the text is scaled down if needed
                     child: Text(
-                      user,
+                      user == null ? "Guest" : user.email.toString(),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,

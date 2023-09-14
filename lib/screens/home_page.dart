@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/data/data.dart';
-import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
@@ -178,7 +177,10 @@ class _MyWidgetState extends ConsumerState<HomePage>
                       BusinessListH(
                         animationController: _animationController,
                         isList: true,
-                        bList: [],
+                        bList: businessData.maybeWhen(
+                          data: (businesses) => businesses,
+                          orElse: () => [],
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
@@ -197,10 +199,8 @@ class _MyWidgetState extends ConsumerState<HomePage>
                         animationController: _animationController,
                         isList: true,
                         bList: businessData.maybeWhen(
-                          data: (businesses) =>
-                              businesses, // Use the list of businesses
-                          orElse: () =>
-                              [], // Return an empty list if data is not available yet
+                          data: (businesses) => businesses,
+                          orElse: () => [],
                         ),
                       ),
                     ],

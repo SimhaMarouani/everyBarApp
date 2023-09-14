@@ -7,7 +7,8 @@ import 'package:iBar/widgets/square_tile.dart';
 
 class SignScreen extends StatefulWidget {
   final Function()? onTap;
-  const SignScreen({super.key, required this.onTap});
+  final Function()? onGuestTap;
+  const SignScreen({super.key, required this.onTap, this.onGuestTap});
 
   @override
   State<SignScreen> createState() => _SignScreenState();
@@ -105,7 +106,26 @@ class _SignScreenState extends State<SignScreen> {
                   onTap: signIn,
                   signText: "Sign in",
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Continue as",
+                      style: TextStyle(color: Colors.grey[700]),
+                    ),
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: widget.onGuestTap,
+                      child: const Text(
+                        "Guest",
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
