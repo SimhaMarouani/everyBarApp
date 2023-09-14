@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AddBusinessScreen extends StatefulWidget {
   const AddBusinessScreen({
@@ -18,50 +17,6 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   final TextEditingController _closingHourController = TextEditingController();
   final TextEditingController _kosherController = TextEditingController();
   final TextEditingController _happyHourController = TextEditingController();
-
-// Custom TextInputFormatter to enforce hour format (HH:mm)
-  final _hourFormatter = FilteringTextInputFormatter(
-    RegExp(r'^([01]?[0-9]|2[0-3]):[0-5][0-9]$'),
-    allow: true,
-    replacementString: '',
-  );
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Apply the custom formatter to the opening and closing hour controllers
-    _openingHourController
-        .addListener(() => _applyFormatter(_openingHourController));
-    _closingHourController
-        .addListener(() => _applyFormatter(_closingHourController));
-  }
-
-  void _applyFormatter(TextEditingController controller) {
-    final text = controller.text;
-    final formattedText = _formatHour(text);
-    if (text != formattedText) {
-      controller.value = controller.value.copyWith(
-        text: formattedText,
-        selection: TextSelection.collapsed(offset: formattedText.length),
-      );
-    }
-  }
-
-  String _formatHour(String text) {
-    if (text.isEmpty) return text;
-
-    final parts = text.split(':');
-    if (parts.length != 2) return text;
-
-    final hour = int.tryParse(parts[0]);
-    final minute = int.tryParse(parts[1]);
-
-    if (hour == null || minute == null) return text;
-    if (hour < 0 || hour > 23 || minute < 0 || minute > 59) return text;
-
-    return '$hour:${minute.toString().padLeft(2, '0')}';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +46,26 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter the address';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _openingHourController,
+                decoration: InputDecoration(labelText: 'Opening Hour'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter the opening hour';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _closingHourController,
+                decoration: InputDecoration(labelText: 'Closing Hour'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter the closing hour';
                   }
                   return null;
                 },
