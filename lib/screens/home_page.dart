@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/data/data.dart';
-import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/add_business_screen.dart';
@@ -16,11 +15,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
     super.key,
-    required this.availableBusinesses,
     required this.onSelectScreen,
   });
 
-  final List<Business> availableBusinesses;
   final void Function(String identifier) onSelectScreen;
 
   @override
@@ -101,6 +98,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final businessData = ref.watch(businessesProvider);
     List<String> languageOptions = [
       'English',
       'Hebrew',
@@ -178,7 +176,10 @@ class _MyWidgetState extends ConsumerState<HomePage>
                       BusinessListH(
                         animationController: _animationController,
                         isList: true,
-                        bList: widget.availableBusinesses,
+                        bList: businessData.maybeWhen(
+                          data: (businesses) => businesses,
+                          orElse: () => [],
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
@@ -196,7 +197,10 @@ class _MyWidgetState extends ConsumerState<HomePage>
                       BusinessListH(
                         animationController: _animationController,
                         isList: true,
-                        bList: widget.availableBusinesses,
+                        bList: businessData.maybeWhen(
+                          data: (businesses) => businesses,
+                          orElse: () => [],
+                        ),
                       ),
                     ],
                   ),

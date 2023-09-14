@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iBar/models/business_model.dart';
 import 'package:iBar/screens/tabs.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

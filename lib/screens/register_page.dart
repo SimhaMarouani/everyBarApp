@@ -9,7 +9,9 @@ import 'package:iBar/widgets/square_tile.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const RegisterPage({super.key, required this.onTap});
+  final Function()? onGuestTap;
+  const RegisterPage(
+      {super.key, required this.onTap, required this.onGuestTap});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -36,6 +38,8 @@ class _RegisterPageState extends State<RegisterPage> {
           email: userNameController.text,
           password: passwordController.text,
         );
+        // Send email verification
+        await credential.user!.sendEmailVerification();
         addUser(credential.user!.email.toString(), credential.user!.uid);
       } else {
         wrongShowMessage("Passwords dont match");
@@ -120,7 +124,26 @@ class _RegisterPageState extends State<RegisterPage> {
                   signText: "Sign Up",
                   onTap: signUp,
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Continue as",
+                      style: TextStyle(color: Colors.grey[700]),
+                    ),
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: widget.onGuestTap,
+                      child: const Text(
+                        "Guest",
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(

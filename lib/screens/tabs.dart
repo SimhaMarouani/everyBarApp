@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iBar/data/data.dart';
+import 'package:iBar/models/business_model.dart';
+import 'package:iBar/providers/business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/add_business_screen.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
@@ -27,7 +29,12 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   String str = "";
 
   void signUserOut() {
-    FirebaseAuth.instance.signOut();
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      FirebaseAuth.instance.signOut();
+    }
+
     selectPage(2);
   }
 
@@ -75,7 +82,6 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
         availableBusinesses: businessList,
       ),
       HomePage(
-        availableBusinesses: businessList,
         onSelectScreen: _setScreen,
       ),
       SearchScreen(
@@ -93,8 +99,6 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-
     final selectedLanguage = ref.watch(currentLanguageProvider);
 
     Brightness brightness = MediaQuery.of(context).platformBrightness;
@@ -106,7 +110,6 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     }
     return Scaffold(
       drawer: MainDrawer(
-        user: user == null ? "Guest" : user.email.toString(),
         onSelectScreen: _setScreen,
         onSignOut: signUserOut,
       ),
