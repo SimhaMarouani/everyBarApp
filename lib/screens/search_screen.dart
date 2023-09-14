@@ -149,7 +149,7 @@ class _SearchScreenState extends State<SearchScreen> {
               (BuildContext context, int index) {
                 return SizedBox(
                     height: deviceHeight * 0.63,
-                    child: BusinessListV(bList: businessList));
+                    child: const BusinessListV(bList: businessList));
               },
             ),
           ),

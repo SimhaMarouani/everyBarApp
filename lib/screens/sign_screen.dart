@@ -83,8 +83,8 @@ class SignScreen extends StatelessWidget {
                 ),
               ),
               Row(
-                children: [Image.asset("assests/google.png")],
-              )
+                  // children: [Image.asset("assests/google.png")],
+                  )
             ],
           ),
         ),

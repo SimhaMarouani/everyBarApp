@@ -66,7 +66,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => DrinkScreen(
+        builder: (ctx) => const DrinkScreen(
           availableBusinesses: businessList,
         ),
       ),
@@ -77,7 +77,9 @@ class _MyWidgetState extends ConsumerState<HomePage>
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => const DrinkFoodScreen(),
+        builder: (ctx) => const DrinkFoodScreen(
+          availableBusinesses: businessList,
+        ),
       ),
     );
   }

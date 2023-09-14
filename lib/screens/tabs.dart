@@ -58,8 +58,10 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     _animationController.forward();
 
     _pages = [
-      DrinkFoodScreen(),
-      DrinkScreen(
+      const DrinkFoodScreen(
+        availableBusinesses: businessList,
+      ),
+      const DrinkScreen(
         availableBusinesses: businessList,
       ),
       HomePage(
