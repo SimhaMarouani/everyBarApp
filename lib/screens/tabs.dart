@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iBar/data/data.dart';
@@ -5,9 +6,9 @@ import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/home_page.dart';
+import 'package:iBar/screens/login_page.dart';
 import 'package:iBar/screens/profile_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
-import 'package:iBar/screens/sign_screen.dart';
 import 'package:iBar/widgets/main_drawer.dart';
 
 class Tabs extends ConsumerStatefulWidget {
@@ -23,6 +24,12 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   late Animation<double> _animation;
 
   String str = "";
+
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+    selectPage(2);
+  }
+
   void selectPage(int indexPage) {
     setState(() {
       _selectedPageIndex = indexPage;
@@ -34,7 +41,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   void _setScreen(String id) async {
     if (id == "profile") {
       await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SignScreen()));
+          context, MaterialPageRoute(builder: (context) => const AuthPage()));
     }
   }
 
@@ -42,6 +49,10 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    final businessesWithFood =
+        businessList.where((business) => business.hasFood).toList();
+    final businessesWithoutFood =
+        businessList.where((business) => !business.hasFood).toList();
     super.initState();
     _animationController = AnimationController(
       vsync: this,
@@ -62,7 +73,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
         availableBusinesses: businessList,
       ),
       const DrinkScreen(
-        availableBusinesses: businessList,
+        availableBusinesses: businessesWithoutFood,
       ),
       HomePage(
         availableBusinesses: businessList,
@@ -76,7 +87,15 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     final selectedLanguage = ref.watch(currentLanguageProvider);
 
     Brightness brightness = MediaQuery.of(context).platformBrightness;
@@ -87,7 +106,11 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
       backgroundColor = const Color.fromARGB(255, 230, 230, 230);
     }
     return Scaffold(
-      drawer: MainDrawer(onSelectScreen: _setScreen),
+      drawer: MainDrawer(
+        user: user == null ? "Guest" : user.email.toString(),
+        onSelectScreen: _setScreen,
+        onSignOut: signUserOut,
+      ),
       backgroundColor: backgroundColor,
       body: AnimatedSwitcher(
         duration: const Duration(seconds: 1), // Adjust animation duration

@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 class Business {
   const Business({
@@ -33,4 +34,49 @@ class Business {
   final Map? menu;
   final String? phone;
   final int ratingAvg;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'age': age,
+      'hasFood': hasFood,
+      'isKosher': isKosher,
+      'loud': loud,
+      'smoke': smoke,
+      'name': name,
+      'menu': menu,
+      'imageUrl': imageUrl,
+      'logoUrl': logoUrl,
+      'openTime': openTime,
+      'closedTime': closedTime,
+      'location': location,
+      'hasHappyHour': hasHappyHour,
+      'phone': phone,
+      'ratingAvg': ratingAvg,
+    };
+  }
+
+  factory Business.fromJson(Map<String, dynamic> json) {
+    return Business(
+      name: json['name'],
+      phone: json['phone'],
+      ratingAvg: json['ratingAvg'],
+      smoke: json['smoke'],
+      age: json['age'],
+      menu: json['menu'],
+      imageUrl: json['imageUrl'],
+      logoUrl: json['logoUrl'],
+      location: json['location'],
+      loud: json['loud'],
+      openTime: json['openTime'],
+      closedTime: json['closedTime'],
+      hasFood: json['hasFood'],
+      hasHappyHour: json['hasHappyHour'],
+      isKosher: json['isKosher'],
+    );
+  }
+}
+
+List<Business> businessesFromJson(String json) {
+  final List<dynamic> parsed = jsonDecode(json);
+  return parsed.map((e) => Business.fromJson(e)).toList();
 }

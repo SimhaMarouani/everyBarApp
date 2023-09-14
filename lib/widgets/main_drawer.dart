@@ -4,111 +4,119 @@ class MainDrawer extends StatelessWidget {
   const MainDrawer({
     super.key,
     required this.onSelectScreen,
+    required this.onSignOut,
+    required this.user,
   });
 
   final void Function(String identifier) onSelectScreen;
+  final void Function() onSignOut;
+  final String user;
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(children: [
-        LayoutBuilder(
-          builder: (context, constraints) {
-            double textFontSize = 30.0; // Adjust the font size as needed
-            TextSpan textSpan = TextSpan(
-              text: "Profile",
-              style: TextStyle(
-                fontSize: textFontSize,
-                color: Theme.of(context).colorScheme.secondary,
+      child: Column(
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).hintColor,
+                  Theme.of(context).highlightColor,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-            );
-
-            TextPainter textPainter = TextPainter(
-              text: textSpan,
-              textDirection: TextDirection.ltr,
-            );
-            textPainter.layout();
-
-            double textWidth = textPainter.width;
-            return DrawerHeader(
-              padding: EdgeInsets.only(
-                top: constraints.minHeight,
-                left: constraints.maxWidth * 0.5 - textWidth,
-              ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary,
-                    Theme.of(context).colorScheme.onPrimary.withOpacity(0.8)
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: Row(children: [
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 Icon(
                   Icons.person,
-                  size: 48,
+                  size: MediaQuery.of(context).size.width * 0.12,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                const SizedBox(width: 18),
-                Text(
-                  'Profile',
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30),
-                )
-              ]),
-            );
-          },
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.home,
-            size: 26,
-            color: Theme.of(context).colorScheme.onBackground,
+                const SizedBox(width: 8),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit
+                        .scaleDown, // This ensures the text is scaled down if needed
+                    child: Text(
+                      user,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.width * 0.08,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          title: Text('Home',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24,
-                  )),
-          onTap: () {
-            onSelectScreen('meals');
-          },
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.settings,
-            size: 26,
-            color: Theme.of(context).colorScheme.onBackground,
+          ListTile(
+            leading: Icon(
+              Icons.home,
+              size: 26,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            title: Text('Home',
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 24,
+                    )),
+            onTap: () {
+              onSelectScreen('meals');
+            },
           ),
-          title: Text('Settings',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24,
-                  )),
-          onTap: () {
-            onSelectScreen('filters');
-          },
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.person,
-            size: 26,
-            color: Theme.of(context).colorScheme.onBackground,
+          ListTile(
+            leading: Icon(
+              Icons.settings,
+              size: 26,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            title: Text('Settings',
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 24,
+                    )),
+            onTap: () {
+              onSelectScreen('filters');
+            },
           ),
-          title: Text('Sign In',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24,
-                  )),
-          onTap: () {
-            onSelectScreen('profile');
-          },
-        ),
-      ]),
+          ListTile(
+            leading: Icon(
+              Icons.person,
+              size: 26,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            title: Text('Sign In',
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 24,
+                    )),
+            onTap: () {
+              onSelectScreen('profile');
+            },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.exit_to_app,
+              size: 26,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            title: Text('Sign Out',
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 24,
+                    )),
+            onTap: () {
+              Scaffold.of(context).closeDrawer();
+              onSignOut();
+            },
+          ),
+        ],
+      ),
     );
   }
 }

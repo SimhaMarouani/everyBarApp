@@ -36,18 +36,14 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
-  Future<void> getSuggestions(String word) async {
-    const serverUrl =
-        'http://127.0.0.1:5000'; // Replace with your server's IP address
+  Future<Map<String, dynamic>> getUser(String userId) async {
     final response =
-        await http.get(Uri.parse('$serverUrl/suggest_word?word=$word'));
+        await http.get(Uri.parse('http://localhost:5000/get_user?uid=$userId'));
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      final suggestions = data['suggestions'];
-      print('Suggestions: $suggestions');
+      return json.decode(response.body);
     } else {
-      print('Failed to fetch suggestions. Status code: ${response.statusCode}');
+      throw Exception('Failed to load user');
     }
   }
 

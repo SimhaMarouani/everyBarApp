@@ -2,25 +2,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iBar/services/auth_service.dart';
 import 'package:iBar/widgets/my_text_field.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:iBar/widgets/signInButton.dart';
 import 'package:iBar/widgets/square_tile.dart';
 
-class SignScreen extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const SignScreen({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<SignScreen> createState() => _SignScreenState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _SignScreenState extends State<SignScreen> {
+class _RegisterPageState extends State<RegisterPage> {
   final userNameController = TextEditingController();
-
+  final confirmPassController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void signUp() {}
-
-  void signIn() async {
+  void signUp() async {
     showDialog(
       context: context,
       builder: (context) {
@@ -30,10 +30,16 @@ class _SignScreenState extends State<SignScreen> {
       },
     );
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: userNameController.text,
-        password: passwordController.text,
-      );
+      if (confirmPassController.text == passwordController.text) {
+        final credential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: userNameController.text,
+          password: passwordController.text,
+        );
+        addUser(credential.user!.email.toString(), credential.user!.uid);
+      } else {
+        wrongShowMessage("Passwords dont match");
+      }
       Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       Navigator.of(context).pop();
@@ -56,6 +62,22 @@ class _SignScreenState extends State<SignScreen> {
     );
   }
 
+  Future<void> addUser(String email, String uid) async {
+    const serverUrl =
+        'http://127.0.0.1:5000'; // Replace with your server's IP address
+    final response = await http.post(
+      Uri.parse('$serverUrl/add_user'),
+      body: json.encode({'email': email, 'uid': uid}),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      print('user added successfully');
+    } else {
+      print('Failed to add user. Status code: ${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,11 +88,11 @@ class _SignScreenState extends State<SignScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 50),
-                const Icon(Icons.lock, size: 100),
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
+                const Icon(Icons.lock, size: 50),
+                const SizedBox(height: 25),
                 Text(
-                  "Welcome Back",
+                  "Create an account",
                   style: TextStyle(color: Colors.grey[700], fontSize: 16),
                 ),
                 const SizedBox(height: 25),
@@ -88,22 +110,15 @@ class _SignScreenState extends State<SignScreen> {
                   obscureText: true,
                 ),
                 const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "Forgot Password?",
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
+                MyTextField(
+                  controller: confirmPassController,
+                  hintText: "Confirm Password",
+                  obscureText: true,
                 ),
                 const SizedBox(height: 25),
                 MyButton(
-                  onTap: signIn,
-                  signText: "Sign in",
+                  signText: "Sign Up",
+                  onTap: signUp,
                 ),
                 const SizedBox(height: 50),
                 Padding(
@@ -152,14 +167,14 @@ class _SignScreenState extends State<SignScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Not a member?",
+                      "Already have an account?",
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
                       child: const Text(
-                        "Sign Up",
+                        "Sign in",
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),

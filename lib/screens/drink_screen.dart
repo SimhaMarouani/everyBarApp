@@ -17,6 +17,6 @@ class DrinkScreen extends StatefulWidget {
 class _DrinkScreenState extends State<DrinkScreen> {
   @override
   Widget build(BuildContext context) {
-    return BusinessListV(bList: businessList);
+    return const BusinessListV(bList: businessList);
   }
 }
