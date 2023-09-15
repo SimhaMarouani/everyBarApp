@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iBar/data/data.dart';
 import 'package:iBar/models/business_model.dart';
-import 'package:iBar/widgets/business_list_vertical.dart';
+import 'package:iBar/widgets/lists/business_list_vertical.dart';
 
 class DrinkFoodScreen extends StatefulWidget {
   const DrinkFoodScreen({

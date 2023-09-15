@@ -4,7 +4,7 @@ import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/widgets/raiting_bar.dart';
-import 'package:iBar/widgets/business_home_page_buttons.dart';
+import 'package:iBar/widgets/buttons/business_home_page_buttons.dart';
 import 'package:iBar/widgets/business_page_text.dart';
 import 'dart:convert';
 

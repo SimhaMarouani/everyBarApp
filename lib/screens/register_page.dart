@@ -4,8 +4,8 @@ import 'package:iBar/services/auth_service.dart';
 import 'package:iBar/widgets/my_text_field.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:iBar/widgets/signInButton.dart';
-import 'package:iBar/widgets/square_tile.dart';
+import 'package:iBar/widgets/buttons/signInButton.dart';
+import 'package:iBar/widgets/buttons/square_tile.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;

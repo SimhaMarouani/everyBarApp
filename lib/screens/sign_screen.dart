@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iBar/services/auth_service.dart';
 import 'package:iBar/widgets/my_text_field.dart';
-import 'package:iBar/widgets/signInButton.dart';
-import 'package:iBar/widgets/square_tile.dart';
+import 'package:iBar/widgets/buttons/signInButton.dart';
+import 'package:iBar/widgets/buttons/square_tile.dart';
 
 class SignScreen extends StatefulWidget {
   final Function()? onTap;
@@ -47,7 +47,8 @@ class _SignScreenState extends State<SignScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.deepPurple,
+          icon: const Icon(Icons.error),
+          backgroundColor: Theme.of(context).hintColor,
           title: Text(
             msg,
             style: const TextStyle(color: Colors.white),
