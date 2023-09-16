@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AddBusinessScreen extends StatefulWidget {
   @override
@@ -15,11 +17,13 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   List<GlobalKey<FormState>> formKeys = [
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
   ];
 
-  List<String> inputs = ['Name', 'Where is it located?'];
+  List<String> inputs = ['Name', 'Where is it located?', 'Pick Image'];
+  String? imagePath; // Added to store the image path
 
-  List<String> formData = List.filled(2, '');
+  List<String> formData = List.filled(3, '');
 
   Future<void> addBusiness(Business business) async {
     const serverUrl =
@@ -43,6 +47,21 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
         duration: Duration(milliseconds: 300),
         curve: Curves.bounceInOut,
       );
+    }
+  }
+
+  Future<void> _getImage() async {
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        setState(() {
+          imagePath = pickedFile.path;
+        });
+      }
+    } catch (e) {
+      print("Error picking image: $e");
     }
   }
 
@@ -74,7 +93,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).highlightColor.withAlpha(120),
+        backgroundColor: Theme.of(context).highlightColor,
         appBar: AppBar(
           title: Text(
             'Add New Business',
@@ -112,25 +131,30 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                             style: const TextStyle(
                                 fontSize: 40, fontFamily: 'Tangerine'),
                           ),
-                          TextFormField(
-                            focusNode: focusNode,
-                            onTapOutside: (event) => focusNode.unfocus(),
-                            onTap: () => focusNode.requestFocus(),
-                            onChanged: (value) {
-                              setState(() {
-                                formData[index] = value;
-                              });
-                            },
-                            decoration: const InputDecoration(
-                              labelText: "Enter Here",
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter the field';
-                              }
-                              return null;
-                            },
-                          ),
+                          index != 2
+                              ? TextFormField(
+                                  focusNode: focusNode,
+                                  onTapOutside: (event) => focusNode.unfocus(),
+                                  onTap: () => focusNode.requestFocus(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      formData[index] = value;
+                                    });
+                                  },
+                                  decoration: const InputDecoration(
+                                    labelText: "Enter Here",
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter the field';
+                                    }
+                                    return null;
+                                  },
+                                )
+                              : ElevatedButton(
+                                  onPressed: _getImage,
+                                  child: Text('Select Image'),
+                                ),
                         ],
                       ),
                     ),
