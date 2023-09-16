@@ -12,20 +12,20 @@ class BusinessPageTexts extends ConsumerWidget {
 
   List<Widget> createTexts(BuildContext context) {
     List<Widget> texts = [];
-    texts.add(createText(business.location, context, "כתובת: ", ""));
-    texts.add(createText(business.openTime, context, "שעות פתיחה: ",
+    texts.add(createText(business.location ?? 'null', context, "כתובת: ", ""));
+    texts.add(createText(business.openTime ?? 'null', context, "שעות פתיחה: ",
         " - ${business.closedTime}"));
-      if (business.hasHappyHour) {
+    if (business.hasHappyHour != null) {
       texts.add(createText("Happy Hour", context, "", ""));
     } else {
       texts.add(createText("No happy hour", context, "", ""));
     }
-      if (business.isKosher) {
-        texts.add(createText("כשר", context, "", ""));
-      } else {
-        texts.add(createText("לא כשר", context, "", ""));
-      }
-      return texts;
+    if (business.isKosher != null) {
+      texts.add(createText("כשר", context, "", ""));
+    } else {
+      texts.add(createText("לא כשר", context, "", ""));
+    }
+    return texts;
   }
 
   Widget createText(

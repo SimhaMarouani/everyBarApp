@@ -65,7 +65,8 @@ class _SearchScreenState extends State<SearchScreen> {
       }
 
       // Check if the location contains any of the keywords
-      final String lowercaseLocation = business.location.toLowerCase();
+      final String lowercaseLocation =
+          business.location != null ? business.location!.toLowerCase() : "Null";
       if (keywords.every((keyword) => lowercaseLocation.contains(keyword))) {
         newList.add(business);
         matchFound = true;

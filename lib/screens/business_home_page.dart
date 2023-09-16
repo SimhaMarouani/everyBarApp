@@ -73,7 +73,7 @@ class BusinessHomePage extends ConsumerWidget {
             Padding(
               padding: EdgeInsets.only(top: deviceHeight * 0.01),
               child: StarRating(
-                initialRating: businessModel.ratingAvg,
+                initialRating: businessModel.ratingAvg ?? 1,
                 onRatingChanged: _handleRatingChanged,
               ),
             ),
