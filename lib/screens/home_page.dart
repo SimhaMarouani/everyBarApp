@@ -4,7 +4,6 @@ import 'package:iBar/data/data.dart';
 import 'package:iBar/providers/business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/add_business_screen.dart';
-import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/profile_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
@@ -198,7 +197,9 @@ class _MyWidgetState extends ConsumerState<HomePage>
                         animationController: _animationController,
                         isList: true,
                         bList: businessData.maybeWhen(
-                          data: (businesses) => businesses,
+                          data: (businesses) {
+                            return businesses;
+                          },
                           orElse: () => [],
                         ),
                       ),

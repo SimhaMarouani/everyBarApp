@@ -35,7 +35,6 @@ class _BusinessSalesListState extends State<BusinessListH> {
     final deviceWidth = MediaQuery.of(context).size.width;
     final deviceHeight = MediaQuery.of(context).size.height;
     const offset = Offset(0.7, 0);
-
     return AnimatedBuilder(
         animation:
             widget.animationController ?? const AlwaysStoppedAnimation(0.0),

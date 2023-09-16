@@ -17,8 +17,16 @@ class BusinesListItem extends StatelessWidget {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-      child: Image.memory(
-        base64.decode(businessItem.imageUrl!),
+      child: Builder(
+        builder: (BuildContext context) {
+          try {
+            return Image.memory(base64.decode(businessItem.imageUrl!));
+          } catch (e) {
+            // Error occurred while decoding or loading the image
+            // You can display a placeholder image or an error message here
+            return Text('Error loading image');
+          }
+        },
       ),
     );
   }

@@ -1,8 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-import 'package:iBar/models/business_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -12,15 +9,18 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () {},
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          title: Text(
+            user != null ? user?.displayName ?? user!.email! : "Guest",
+          ),
         ),
-      ),
+      ],
     );
   }
 }

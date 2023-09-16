@@ -17,7 +17,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
     GlobalKey<FormState>(),
   ];
 
-  List<String> inputs = ['Name', 'Open Hours'];
+  List<String> inputs = ['Name', 'Where is it located?'];
 
   List<String> formData = List.filled(2, '');
 
@@ -48,49 +48,50 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
 
   void _submitForm() {
     if (formKeys[_currentPage].currentState!.validate()) {
-      Business newBuisness = Business(name: formData[0]);
+      Business newBuisness = Business(name: formData[0], location: formData[1]);
+      addBusiness(newBuisness);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: Theme.of(context).highlightColor.withAlpha(120),
-      appBar: AppBar(
-        title: Text(
-          'Add New Business',
-          style: TextStyle(color: Theme.of(context).primaryColor),
+    return GestureDetector(
+      onHorizontalDragEnd: (details) {
+        if (details.velocity.pixelsPerSecond.dx > 0) {
+          if (_currentPage > 0) {
+            pageController.previousPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Cubic(0.32, 0.92, 0.12, 1.0),
+            );
+          }
+        } else {
+          if (_currentPage != formKeys.length - 1) {
+            _goToNextPage();
+          } else {
+            _submitForm();
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).highlightColor.withAlpha(120),
+        appBar: AppBar(
+          title: Text(
+            'Add New Business',
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
         ),
-      ),
-      body: PageView.builder(
-        controller: pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: (index) {
-          setState(() {
-            _currentPage = index;
-          });
-        },
-        itemCount: formKeys.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onHorizontalDragEnd: (details) {
-              if (details.velocity.pixelsPerSecond.dx > 0) {
-                if (_currentPage > 0) {
-                  pageController.previousPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Cubic(0.32, 0.92, 0.12, 1.0),
-                  );
-                }
-              } else {
-                if (_currentPage != formKeys.length - 1) {
-                  _goToNextPage();
-                } else {
-                  _submitForm();
-                }
-              }
-            },
-            child: Padding(
+        body: PageView.builder(
+          controller: pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: (index) {
+            setState(() {
+              _currentPage = index;
+            });
+          },
+          itemCount: formKeys.length,
+          itemBuilder: (context, index) {
+            return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
                 key: formKeys[index],
@@ -136,42 +137,45 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                     const SizedBox(height: 20.0),
                     ElevatedButton(
                       onPressed: _goToNextPage,
-                      child: const Text('Next'),
+                      child: Text(
+                        _currentPage == formKeys.length - 1 ? 'Submit' : 'Next',
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-          );
-        },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          height: 70.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  if (_currentPage > 0) {
-                    pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Cubic(0.32, 0.92, 0.12, 1.0),
-                    );
-                  }
-                },
-                child: const Text('Previous'),
-              ),
-              ElevatedButton(
-                onPressed: _currentPage == formKeys.length - 1
-                    ? _submitForm
-                    : _goToNextPage,
-                child: Text(
-                  _currentPage == formKeys.length - 1 ? 'Submit' : 'Next',
+            );
+          },
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Theme.of(context).hintColor.withAlpha(120),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            height: 70.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if (_currentPage > 0) {
+                      pageController.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Cubic(0.32, 0.92, 0.12, 1.0),
+                      );
+                    }
+                  },
+                  child: const Text('Previous'),
                 ),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: _currentPage == formKeys.length - 1
+                      ? _submitForm
+                      : _goToNextPage,
+                  child: Text(
+                    _currentPage == formKeys.length - 1 ? 'Submit' : 'Next',
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

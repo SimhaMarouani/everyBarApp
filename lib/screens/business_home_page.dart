@@ -38,7 +38,18 @@ class BusinessHomePage extends ConsumerWidget {
               child: Stack(
                 children: [
                   Center(
-                    child: Image.memory(base64.decode(businessModel.imageUrl!)),
+                    child: Builder(
+                      builder: (BuildContext context) {
+                        try {
+                          return Image.memory(
+                              base64.decode(businessModel.imageUrl!));
+                        } catch (e) {
+                          // Error occurred while decoding or loading the image
+                          // You can display a placeholder image or an error message here
+                          return Text('Error loading image');
+                        }
+                      },
+                    ),
                   ),
                   Positioned(
                     child: Container(
