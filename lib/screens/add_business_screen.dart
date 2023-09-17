@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class AddBusinessScreen extends StatefulWidget {
   @override
@@ -14,11 +14,38 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   PageController pageController = PageController();
   FocusNode focusNode = FocusNode();
   int _currentPage = 0;
+  List<TextEditingController> textInputs = List.generate(
+      3, // Number of text inputs you want to create
+      (index) => TextEditingController());
+
   List<GlobalKey<FormState>> formKeys = [
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
   ];
+  Row buildPageIndicator() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(formKeys.length, (index) {
+        return Padding(
+          padding:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
+          child: Container(
+            width: 8.0,
+            height: 8.0,
+            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _currentPage == index
+                  ? Colors.white // Color for current page dot
+                  : Colors.white
+                      .withOpacity(0.3), // Color for inactive page dots
+            ),
+          ),
+        );
+      }),
+    );
+  }
 
   List<String> inputs = ['Name', 'Where is it located?', 'Pick Image'];
   String? imagePath; // Added to store the image path
@@ -93,7 +120,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).highlightColor,
+        backgroundColor: Theme.of(context).hintColor,
         appBar: AppBar(
           title: Text(
             'Add New Business',
@@ -117,12 +144,8 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       height: deviceHeight * 0.4,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).hintColor,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -133,6 +156,8 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           ),
                           index != 2
                               ? TextFormField(
+                                  controller: textInputs[index],
+                                  autocorrect: false,
                                   focusNode: focusNode,
                                   onTapOutside: (event) => focusNode.unfocus(),
                                   onTap: () => focusNode.requestFocus(),
@@ -151,20 +176,31 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                                     return null;
                                   },
                                 )
-                              : ElevatedButton(
-                                  onPressed: _getImage,
-                                  child: Text('Select Image'),
-                                ),
+                              : imagePath != null
+                                  ? SizedBox(
+                                      width: 100.0,
+                                      height: 100.0,
+                                      child: Image.file(
+                                        File(imagePath!), // Import 'dart:io'
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : ElevatedButton(
+                                      onPressed: _getImage,
+                                      child: Text('Select Image'),
+                                    ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 20.0),
-                    ElevatedButton(
-                      onPressed: _goToNextPage,
+                    const Align(
+                      alignment: Alignment.center,
                       child: Text(
-                        _currentPage == formKeys.length - 1 ? 'Submit' : 'Next',
+                        "Swipe Left To Continue",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
+                    buildPageIndicator(),
                   ],
                 ),
               ),
