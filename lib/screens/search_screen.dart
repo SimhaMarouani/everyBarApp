@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iBar/models/business_model.dart';
-import 'package:iBar/widgets/business_list_vertical.dart';
+import 'package:iBar/widgets/lists/business_list_vertical.dart';
 import 'package:iBar/widgets/search_bar.dart';
 import 'package:iBar/data/data.dart';
 import 'package:http/http.dart' as http;
@@ -65,7 +65,8 @@ class _SearchScreenState extends State<SearchScreen> {
       }
 
       // Check if the location contains any of the keywords
-      final String lowercaseLocation = business.location.toLowerCase();
+      final String lowercaseLocation =
+          business.location != null ? business.location!.toLowerCase() : "Null";
       if (keywords.every((keyword) => lowercaseLocation.contains(keyword))) {
         newList.add(business);
         matchFound = true;

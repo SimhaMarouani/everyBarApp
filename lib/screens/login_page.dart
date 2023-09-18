@@ -23,7 +23,9 @@ class AuthPage extends StatelessWidget {
             });
             return Container();
           } else {
-            return const LoginOrReg();
+            return LoginOrReg(
+              showLoginPage: true,
+            );
           }
         },
       ),

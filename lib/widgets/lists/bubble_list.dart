@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iBar/data/data.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/screens/business_home_page.dart';
-import 'package:iBar/widgets/bubble.dart';
+import 'package:iBar/widgets/buttons/bubble.dart';
 
 class GenerateBubblesResult {
   final List<Bubble> bubbles;

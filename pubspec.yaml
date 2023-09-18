@@ -35,6 +35,8 @@ dependencies:
   provider: ^5.0.0
   google_sign_in: ^6.1.5
   firebase_auth: ^4.9.0
+  image_picker: ^1.0.4
+  permission_handler: ^11.0.0
 
 
 

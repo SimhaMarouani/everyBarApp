@@ -4,8 +4,8 @@ import 'package:iBar/services/auth_service.dart';
 import 'package:iBar/widgets/my_text_field.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:iBar/widgets/signInButton.dart';
-import 'package:iBar/widgets/square_tile.dart';
+import 'package:iBar/widgets/buttons/signInButton.dart';
+import 'package:iBar/widgets/buttons/square_tile.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -19,6 +19,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final userNameController = TextEditingController();
+  final emailController = TextEditingController();
   final confirmPassController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -32,19 +33,25 @@ class _RegisterPageState extends State<RegisterPage> {
       },
     );
     try {
-      if (confirmPassController.text == passwordController.text) {
+      if (confirmPassController.text == passwordController.text &&
+          userNameController.text.isNotEmpty) {
         final credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: userNameController.text,
+          email: emailController.text,
           password: passwordController.text,
         );
         // Send email verification
         await credential.user!.sendEmailVerification();
-        addUser(credential.user!.email.toString(), credential.user!.uid);
+        addUser(credential.user!.email.toString(), credential.user!.uid,
+            userNameController.text);
       } else {
-        wrongShowMessage("Passwords dont match");
+        Navigator.of(context).pop();
+        if (userNameController.text.isEmpty) {
+          wrongShowMessage("Provide UserName");
+        } else {
+          wrongShowMessage("Passwords dont match");
+        }
       }
-      Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       Navigator.of(context).pop();
       wrongShowMessage(e.code);
@@ -66,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Future<void> addUser(String email, String uid) async {
+  Future<void> addUser(String email, String uid, String name) async {
     const serverUrl =
         'http://127.0.0.1:5000'; // Replace with your server's IP address
     final response = await http.post(
@@ -101,13 +108,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 25),
                 MyTextField(
-                  controller: userNameController,
-                  hintText: "UserName",
+                  controller: emailController,
+                  hintText: "Email",
                   obscureText: false,
                 ),
-                const SizedBox(
-                  height: 10,
+                const SizedBox(height: 10),
+                MyTextField(
+                  controller: userNameController,
+                  hintText: "User's Name",
+                  obscureText: false,
                 ),
+                const SizedBox(height: 10),
                 MyTextField(
                   controller: passwordController,
                   hintText: "Password",

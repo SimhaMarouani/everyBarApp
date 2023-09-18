@@ -11,7 +11,7 @@ class FilterdBusiNotifier extends StateNotifier<List<Business>> {
       state = state.where((m) => m.name != busi.name).toList();
       return false;
     } else {
-      if (busi.hasFood) {
+      if (busi.hasFood != null) {
         // Only add if the business has food
         state = [...state, busi];
         return true;

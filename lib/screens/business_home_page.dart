@@ -4,7 +4,7 @@ import 'package:iBar/data/Headlines.dart';
 import 'package:iBar/models/business_model.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/widgets/raiting_bar.dart';
-import 'package:iBar/widgets/business_home_page_buttons.dart';
+import 'package:iBar/widgets/buttons/business_home_page_buttons.dart';
 import 'package:iBar/widgets/business_page_text.dart';
 import 'dart:convert';
 
@@ -38,7 +38,18 @@ class BusinessHomePage extends ConsumerWidget {
               child: Stack(
                 children: [
                   Center(
-                    child: Image.memory(base64.decode(businessModel.imageUrl!)),
+                    child: Builder(
+                      builder: (BuildContext context) {
+                        try {
+                          return Image.memory(
+                              base64.decode(businessModel.imageUrl!));
+                        } catch (e) {
+                          // Error occurred while decoding or loading the image
+                          // You can display a placeholder image or an error message here
+                          return const Text('Error loading image');
+                        }
+                      },
+                    ),
                   ),
                   Positioned(
                     child: Container(
@@ -73,7 +84,7 @@ class BusinessHomePage extends ConsumerWidget {
             Padding(
               padding: EdgeInsets.only(top: deviceHeight * 0.01),
               child: StarRating(
-                initialRating: businessModel.ratingAvg,
+                initialRating: businessModel.ratingAvg ?? 1,
                 onRatingChanged: _handleRatingChanged,
               ),
             ),

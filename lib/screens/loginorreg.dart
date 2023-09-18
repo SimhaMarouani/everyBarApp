@@ -4,19 +4,19 @@ import 'package:iBar/screens/sign_screen.dart';
 import 'package:iBar/screens/tabs.dart';
 
 class LoginOrReg extends StatefulWidget {
-  const LoginOrReg({super.key});
+  LoginOrReg({super.key, required this.showLoginPage});
+  bool showLoginPage;
 
   @override
   State<LoginOrReg> createState() => _LoginOrRegState();
 }
 
 class _LoginOrRegState extends State<LoginOrReg> {
-  bool showLoginPage = true;
   bool guest = false;
 
   void togglePage() {
     setState(() {
-      showLoginPage = !showLoginPage;
+      widget.showLoginPage = !widget.showLoginPage;
     });
   }
 
@@ -37,7 +37,7 @@ class _LoginOrRegState extends State<LoginOrReg> {
       });
       return SizedBox();
     }
-    return showLoginPage
+    return widget.showLoginPage
         ? SignScreen(
             onTap: togglePage,
             onGuestTap: continueAsUser,

@@ -2,11 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iBar/data/data.dart';
-import 'package:iBar/models/business_model.dart';
-import 'package:iBar/providers/business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
-import 'package:iBar/screens/add_business_screen.dart';
-import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/home_page.dart';
 import 'package:iBar/screens/login_page.dart';
@@ -57,10 +53,10 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    final businessesWithFood =
-        businessList.where((business) => business.hasFood).toList();
-    final businessesWithoutFood =
-        businessList.where((business) => !business.hasFood).toList();
+    // final businessesWithFood =
+    // businessList.where((business) => business.hasFood).toList();
+    // final businessesWithoutFood =
+    // businessList.where((business) => !business.hasFood).toList();
     super.initState();
     _animationController = AnimationController(
       vsync: this,
@@ -77,7 +73,7 @@ class _TabsState extends ConsumerState<Tabs> with TickerProviderStateMixin {
     _animationController.forward();
 
     _pages = [
-      const AddBusinessScreen(),
+      HomePage(onSelectScreen: _setScreen),
       const DrinkScreen(
         availableBusinesses: businessList,
       ),

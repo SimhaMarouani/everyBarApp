@@ -17,8 +17,17 @@ class BusinesListItem extends StatelessWidget {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-      child: Image.memory(
-        base64.decode(businessItem.imageUrl!),
+      child: Builder(
+        builder: (BuildContext context) {
+          try {
+            return Image.memory(base64.decode(businessItem.imageUrl!));
+          } catch (e) {
+            return Image.asset(
+              'assests/home.png',
+              height: MediaQuery.of(context).size.height * 0.122,
+            );
+          }
+        },
       ),
     );
   }

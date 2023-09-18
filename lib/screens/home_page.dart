@@ -4,12 +4,11 @@ import 'package:iBar/data/data.dart';
 import 'package:iBar/providers/business_provider.dart';
 import 'package:iBar/providers/language_provider.dart';
 import 'package:iBar/screens/add_business_screen.dart';
-import 'package:iBar/screens/drink_food_screen.dart';
 import 'package:iBar/screens/drink_screen.dart';
 import 'package:iBar/screens/profile_screen.dart';
 import 'package:iBar/screens/search_screen.dart';
-import 'package:iBar/widgets/bubble_list.dart';
-import 'package:iBar/widgets/business_list_horizontal.dart';
+import 'package:iBar/widgets/lists/bubble_list.dart';
+import 'package:iBar/widgets/lists/business_list_horizontal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -76,7 +75,7 @@ class _MyWidgetState extends ConsumerState<HomePage>
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => const AddBusinessScreen(),
+        builder: (ctx) => AddBusinessScreen(),
       ),
     );
   }
@@ -198,7 +197,9 @@ class _MyWidgetState extends ConsumerState<HomePage>
                         animationController: _animationController,
                         isList: true,
                         bList: businessData.maybeWhen(
-                          data: (businesses) => businesses,
+                          data: (businesses) {
+                            return businesses;
+                          },
                           orElse: () => [],
                         ),
                       ),
