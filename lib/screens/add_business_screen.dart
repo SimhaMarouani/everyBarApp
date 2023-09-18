@@ -6,6 +6,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 class AddBusinessScreen extends StatefulWidget {
+  const AddBusinessScreen({super.key});
+
   @override
   State<AddBusinessScreen> createState() => _AddBusinessScreenState();
 }

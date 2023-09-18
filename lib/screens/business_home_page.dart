@@ -46,7 +46,7 @@ class BusinessHomePage extends ConsumerWidget {
                         } catch (e) {
                           // Error occurred while decoding or loading the image
                           // You can display a placeholder image or an error message here
-                          return Text('Error loading image');
+                          return const Text('Error loading image');
                         }
                       },
                     ),

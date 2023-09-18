@@ -22,9 +22,10 @@ class BusinesListItem extends StatelessWidget {
           try {
             return Image.memory(base64.decode(businessItem.imageUrl!));
           } catch (e) {
-            // Error occurred while decoding or loading the image
-            // You can display a placeholder image or an error message here
-            return Text('Error loading image');
+            return Image.asset(
+              'assests/home.png',
+              height: MediaQuery.of(context).size.height * 0.122,
+            );
           }
         },
       ),
