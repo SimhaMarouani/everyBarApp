@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iBar/screens/loginorreg.dart';
-import 'package:iBar/screens/register_page.dart';
 import 'package:iBar/widgets/buttons/drawer_button.dart';
 
 class MainDrawer extends StatelessWidget {

@@ -7,7 +7,7 @@ import 'package:iBar/models/business_model.dart';
 final businessesProvider = FutureProvider<List<Business>>((ref) async {
   try {
     final response =
-        await http.get(Uri.parse('http://127.0.0.1:5000/get_all_businesses'));
+        await http.get(Uri.parse('http://10.0.0.22:5010/get_all_businesses'));
 
     if (response.statusCode == 200) {
       List<Business> businesses = businessesFromJson(response.body);
@@ -16,7 +16,7 @@ final businessesProvider = FutureProvider<List<Business>>((ref) async {
       return businessList;
     }
   } catch (error) {
-    print('Error fetching businesses: $error');
+    print(error);
     return businessList;
   }
 });

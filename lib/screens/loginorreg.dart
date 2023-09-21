@@ -35,7 +35,7 @@ class _LoginOrRegState extends State<LoginOrReg> {
           MaterialPageRoute(builder: (context) => const Tabs()),
         );
       });
-      return SizedBox();
+      return const SizedBox();
     }
     return widget.showLoginPage
         ? SignScreen(

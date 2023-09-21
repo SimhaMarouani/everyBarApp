@@ -34,6 +34,5 @@ class MyDrawerButton extends StatelessWidget {
             ),
       ),
     );
-    ;
   }
 }
