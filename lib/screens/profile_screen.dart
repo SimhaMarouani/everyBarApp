@@ -15,7 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void goToAddBusinessScreen() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const AddBusinessScreen()));
+        .push(MaterialPageRoute(builder: (context) => AddBusinessScreen()));
   }
 
   @override

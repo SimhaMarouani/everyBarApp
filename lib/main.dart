@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = ThemeData(
         useMaterial3: true,
-        primaryColor: const Color.fromARGB(255, 234, 203, 225),
+        primaryColor: const Color.fromARGB(255, 121, 21, 91),
         secondaryHeaderColor: const Color.fromARGB(255, 194, 51, 115),
         highlightColor: const Color.fromARGB(255, 246, 99, 92),
         hintColor: const Color.fromARGB(255, 255, 186, 134),

@@ -73,7 +73,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   void _goToNextPage() {
     if (formKeys[_currentPage].currentState!.validate()) {
       pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
+        duration: Duration(milliseconds: 300),
         curve: Curves.bounceInOut,
       );
     }
@@ -110,7 +110,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
           if (_currentPage > 0) {
             pageController.previousPage(
               duration: const Duration(milliseconds: 300),
-              curve: const Cubic(0.32, 0.92, 0.12, 1.0),
+              curve: Cubic(0.32, 0.92, 0.12, 1.0),
             );
           }
         } else {
@@ -189,7 +189,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                                     )
                                   : ElevatedButton(
                                       onPressed: _getImage,
-                                      child: const Text('Select Image'),
+                                      child: Text('Select Image'),
                                     ),
                         ],
                       ),
@@ -222,7 +222,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                     if (_currentPage > 0) {
                       pageController.previousPage(
                         duration: const Duration(milliseconds: 300),
-                        curve: const Cubic(0.32, 0.92, 0.12, 1.0),
+                        curve: Cubic(0.32, 0.92, 0.12, 1.0),
                       );
                     }
                   },

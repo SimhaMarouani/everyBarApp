@@ -13,7 +13,7 @@ class BarProfile extends ConsumerWidget {
       return WidgetSpan(
         alignment: PlaceholderAlignment.middle,
         child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
+          padding: EdgeInsets.only(left: 10, right: 10),
           child: Text(
             text,
             style: TextStyle(
@@ -34,7 +34,7 @@ class BarProfile extends ConsumerWidget {
     return Container(
       width: deviceWidth,
       height: 50,
-      decoration: const BoxDecoration(color: Color.fromARGB(255, 240, 240, 240)),
+      decoration: BoxDecoration(color: Color.fromARGB(255, 240, 240, 240)),
       child: Center(
         child: RichText(
           text: TextSpan(
