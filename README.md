@@ -5,10 +5,9 @@ A new Flutter App designed for people who wants to find location to go out and d
 ****THE APP IS STILL IN PROGRESS****
 
 
-![Sample Image](images/bar1.png)
-![Sample Image](images/bar2.png)
-![Sample Image](images/bar3.png)
-![Sample Image](images/bar4.png)
-![Sample Image](images/bar5.png)
-
+<img src="images/bar1.png" alt="Sample Image" width="200"/>
+<img src="images/bar2.png" alt="Sample Image" width="200"/>
+<img src="images/bar3.png" alt="Sample Image" width="200"/>
+<img src="images/bar4.png" alt="Sample Image" width="200"/>
+<img src="images/bar5.png" alt="Sample Image" width="200"/>
 
