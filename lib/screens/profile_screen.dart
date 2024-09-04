@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               user != null ? user?.displayName ?? user!.email! : "Guest",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: deviceWidth * 0.04,
+                fontSize: deviceWidth * 0.045,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -39,12 +39,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               user != null ? user!.email! : "",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: deviceWidth * 0.03,
+                fontSize: deviceWidth * 0.035,
               ),
             ),
           ],
         ),
-        toolbarHeight: deviceHeight * 0.11,
+        toolbarHeight: deviceHeight * 0.1,
         backgroundColor: Theme.of(context).hintColor,
       ),
       body: Column(
