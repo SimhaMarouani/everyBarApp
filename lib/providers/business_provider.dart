@@ -6,8 +6,8 @@ import 'package:iBar/models/business_model.dart';
 
 final businessesProvider = FutureProvider<List<Business>>((ref) async {
   try {
-    final response =
-        await http.get(Uri.parse('http://127.0.0.1:5000/get_all_businesses'));
+    final response = await http
+        .get(Uri.parse('http://192.168.1.32:5020/get_all_businesses'));
 
     if (response.statusCode == 200) {
       List<Business> businesses = businessesFromJson(response.body);

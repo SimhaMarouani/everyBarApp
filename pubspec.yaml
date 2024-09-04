@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^0.22.0
-  http: ^0.13.3
+  http: ^1.1.0
   provider: ^5.0.0
   google_sign_in: ^6.1.5
   firebase_auth: ^4.9.0
